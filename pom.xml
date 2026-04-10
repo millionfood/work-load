@@ -1,7 +1,165 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.fmc</groupId>
-  <artifactId>work-log</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.fmc</groupId>
+    <artifactId>work-log</artifactId>
+    <name>work-log</name>
+    <packaging>war</packaging>
+    <version>1.0.0-BUILD-SNAPSHOT</version>
+<!-- 아래와 같이 properties 안에 선언해 둔 것은 아래쪽에서 ${변수명} 으로 그 값을 꺼내 쓸 수 있다. -->
+    <properties>
+        <java-version>11</java-version>
+        <org.springframework-version>5.3.18</org.springframework-version>
+        <org.aspectj-version>1.9.7</org.aspectj-version>
+        <org.slf4j-version>1.7.32</org.slf4j-version>
+    </properties>
+<!-- 설계도 여기 적는다해서 라이브러리가 다운되지는 않는다. 대신 나중에 이 라이브러리를 썼을 경우
+버전을 따로 적지 않아도 여기서 정한 버전을 따라가라고 선언해 놓음 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <!-- 이 bom 파일 안에 s3,ec2, dynamoDb, lambda 등 aws가 제공하는 모든 자바 라이브러리의 버전이 들어 2.17.102에 맞게 매칭되어 있음 -->
+                <artifactId>bom</artifactId>
+                <version>2.17.102</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+<!-- 여기서 부터는 즉시 설치됨 -->
+    <dependencies>
+    <!-- spring-context : 스프링의 핵심인 객체 관리와 의존성 주입을 담당 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+    <!-- 웹 게시판의 컨트롤러, 뷰 등을 연결해주는 웹 엔진 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+	<!-- spring-jdbc,spring-tx 스프링에서 DB와 연결하고, 오류 발생 시 작업 취소를 관리한다. -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+	<!-- spring-test : 작성한 코드가 잘 돌아가는지 테스트 할 수 있게 도와준다. -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework-version}</version>
+            <scope>test</scope>
+        </dependency>
+	<!-- mybatis,mybatis-spring : 복잡한 SQL 쿼리를 자바 코드와 분리하여 깔끔하게 관리하게 해준다. -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>2.0.6</version>
+        </dependency>
+    <!-- mariadb-java-client : 실제 MariaDB 데이터베이스에 접속하기 위한 전용 드라이버이다. -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.7.4</version>
+        </dependency>
+	<!-- jackson-databind,jackson-datatype-jsr310 : 자바 객체를 JSON 형식(데이터 통신용)으로 변환해준다 - AJAX통신에 필수 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.13.1</version>
+        </dependency>
+    <!-- commons-fileupload,commons-io : 게시판에 사진이나 파일을 업로드할 때 핵심적인 역할 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+<!-- 잘보면 버전 정보가 없음, 위쪽 dependencyManagement에서 규격을 정해놨기 때문 -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+        </dependency>
+    <!-- lombok : Getter,Setter,ToString 같은 반복적인 코드를 어노테이션 하나로 자동 생성해 준다. -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>provided</scope>
+        </dependency>
+	<!-- logback-classic : 서버 콘솔창에 로그를 남기는 표준 도구, 내부적으로 sl4j-api 를 포함 -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+	<!-- javax.servlet-api : 서블릿 api, 자바 코드가 웹 브라우저의 요청을 알아듣게 해주는 통역사 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version> 
+            <!-- 아래 코드는 라이브러리 충돌을 막아주는 중요한 설정, 코딩할때는 쓰지만, 실제 배포시에는 톰캣이 가진것을 쓰겠다는 뜻 -->
+            <scope>provided</scope>
+        </dependency>
+    <!-- 자바 코드 안에 HTML을 섞어 쓸 수 있는 jsp파일을 만들고 실행하게 해줌 -->
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.3</version>
+            <!-- 아래 코드는 라이브러리 충돌을 막아주는 중요한 설정, 코딩할때는 쓰지만, 실제 배포시에는 톰캣이 가진것을 쓰겠다는 뜻 -->
+            <scope>provided</scope>
+        </dependency>
+    <!-- jsp 화면에서 자바코드를 직접 안쓰고 반복문, 조건문 등을 쓰게 해주는 표준 태그 라이브러리 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+	<!-- 단위 테스트 수행 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
