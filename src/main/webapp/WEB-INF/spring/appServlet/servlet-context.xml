@@ -16,7 +16,7 @@
         <beans:property name="suffix" value=".jsp" />
     </beans:bean>
 <!-- 해당 위치의 @Controller 가 붙은 클래스를 자동으로 메모리에 올림 -->    
-    <context:component-scan base-package="com.pj.controller" />
+    <context:component-scan base-package="com.fmc.controller" />
 <!-- 이미지/파일 업로드를 가능하게 해주는 부품 -->    
     <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <beans:property name="maxUploadSize" value="10485760" /> 

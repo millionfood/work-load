@@ -15,9 +15,11 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 <!-- 사용자 정의 리스너 -->    
+<!--
     <listener>
-        <listener-class>com.pj.listener.AppListener</listener-class>
+        <listener-class>com.fmc.listener.AppListener</listener-class>
     </listener>
+-->
 <!-- 모든 필터는 filter,filter-mapping이 한 세트 -->
 <!-- filter : 어떤 클래스(부품)를 필터로 쓸 것인가를 정의 -->
 <!-- filter-mapping : 그 필터를 어떤 주소(URL)에 적용할 것인가를 정의 -->

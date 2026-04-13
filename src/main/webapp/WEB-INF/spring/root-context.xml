@@ -15,15 +15,16 @@
         <property name="url" value="${db.url}"/>
         <property name="user" value="${db.user}"/>
         <property name="password" value="${db.password}"/>
-        <property name="maxPoolSize" value="10"/> </bean>
+        <property name="maxPoolSize" value="10"/> 
+    </bean>
 <!-- MyBatis가 SQL을 실행할 때 사용하는 가장 중요한 객체, 위에서 만든 dataSource를 가져와서 연결 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 <!-- 해당 패키지 안에 있는 클래스들 중 @Component 계열의 어노테이션을 자동으로 찾아 등록 -->
-    <context:component-scan base-package="com.pj.service"/>
+    <context:component-scan base-package="com.fmc.service"/>
 <!-- 해당 패키지 않에 있는 인터페이스들은 자동으로 MyBatis Mapper로 등록 -->
-    <mybatis-spring:scan base-package="com.pj.mapper"/>
+    <mybatis-spring:scan base-package="com.fmc.mapper"/>
 <!-- 트랜잭션을 관리, dataSource(데이터베이스 연결)을 꽉 쥐고 있으면서 SQL작업이 시작될 때, 트랜잭션 시작, 작업 끝나면 커밋,롤백 등을 수행 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>

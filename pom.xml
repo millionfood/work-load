@@ -29,6 +29,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    
 <!-- 여기서 부터는 즉시 설치됨 -->
     <dependencies>
     <!-- spring-context : 스프링의 핵심인 객체 관리와 의존성 주입을 담당 -->
@@ -150,6 +151,17 @@
     </dependencies>
 
     <build>
+    	<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

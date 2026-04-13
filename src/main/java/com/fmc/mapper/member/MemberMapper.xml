@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.fmc.mapper.member.MemberMapper">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="mno">
+		INSERT INTO
+		MEMBER(email,pw,nickname)
+		VALUES(#{email},#{pw},#{nickname})
+	</insert>
+</mapper>
