@@ -1,0 +1,90 @@
+@charset "UTF-8";
+.home_wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home_container {
+  width: 70%;
+  min-width: 600px;
+  height: 100%;
+  padding-top: 200px;
+  display: flex;
+  flex-direction: column;
+}
+.home_box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* 오늘 네 하루는 어때 + 게시판으로 이동 버튼 */
+.home_box_title {
+  margin-bottom: 50px;
+}
+.home_box_title p {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.home_box_gotoboard_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home_box_gotoboard_box {
+  height: 50px;
+  background-color: #3b4890;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  border-radius: 10px;
+  margin-bottom: 100px;
+}
+.home_box_gotoboard_box span {
+  color: white;
+  margin-right: 10px;
+}
+.home_box_gotoboard_box i {
+  color: white;
+}
+/* 인기글 */
+.home_box_board_title {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.home_box_board_title span {
+  font-size: 20px;
+  font-weight: 600;
+}
+.home_box_board_post {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.home_box_board_post_content {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
+}
+.home_box_board_post_img {
+  width: 80px;
+  height: 50px;
+  background-color: #3b4890;
+  margin-right: 15px;
+}
+.home_box_board_post_text {
+  font-size: 15px;
+  font-weight: 500px;
+}

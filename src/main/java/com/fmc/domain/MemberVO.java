@@ -12,5 +12,5 @@ public class MemberVO {
 	private String nickname;
 	private LocalDateTime regdate;
 	private LocalDateTime updateDate;
-	
+	private MemberRole role = MemberRole.USER;
 }

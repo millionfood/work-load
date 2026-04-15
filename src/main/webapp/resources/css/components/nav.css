@@ -1,0 +1,43 @@
+.header_container {
+  position: fixed;
+  width: 100%;
+  height: 80px;
+  box-shadow: 0 2px 10px 0 rgb(0 0 0/30%);
+  padding-right: 50px;
+  padding-left: 50px;
+  background-color: #3b4890;
+  overflow: hidden;
+}
+
+.header_container a {
+  text-decoration: none;
+  color: white;
+}
+
+.header_container a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.header_box {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 8fr 2fr;
+}
+
+.header_menu1 .header_menu_box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header_menu2 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

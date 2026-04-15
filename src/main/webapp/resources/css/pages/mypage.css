@@ -1,0 +1,95 @@
+.my_page_wrapper {
+  width: 100%;
+  height: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 150px;
+}
+.my_page_container {
+  width: 600px;
+  height: 100%;
+  background-color: #3b4890;
+  display: grid;
+  grid-template-rows: 0.5fr 1.5fr 1fr;
+  padding-top: 70px;
+  padding-bottom: 100px;
+  padding-right: 125px;
+  padding-left: 125px;
+}
+/* my_page_box 첫번째 요소 - h1의 부모 */
+.my_page_box:nth-of-type(1) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.my_page_box:nth-of-type(1) h1 {
+  font-size: 40px;
+  font-weight: 600;
+  color: white;
+}
+/* my_page_box 두번째 요소 - form의 부모 */
+.my_page_box:nth-of-type(2) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.my_page_input_gourp {
+  width: 100%;
+}
+.my_page_input_gourp label {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.my_page_input_gourp input {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+/* my_page_box 세번째 요소 -  edit,delete */
+.my_page_box:nth-of-type(3) {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my_page_edit_link {
+  display: block;
+  text-decoration: none;
+}
+.my_page_edit_link_box {
+  width: 150px;
+  height: 50px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+}
+.my_page_edit_link_box span {
+  color: black;
+  font-size: 17px;
+}
+.my_page_delete_link {
+  display: block;
+  text-decoration: none;
+}
+.my_page_delete_link_box {
+  width: 150px;
+  height: 50px;
+  background-color: #d32f2f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+}
+
+.my_page_delete_link_box span {
+  color: white;
+  font-size: 17px;
+}

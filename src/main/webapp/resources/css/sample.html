@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="body_wrapper">
+      <header class="header_container">
+        <div class="header_box">
+          <div class="header_menu1">
+            <div class="header_menu_box">
+              <a class="header_menu_home" href="${ContextPath}"> WORK_LOG </a>
+            </div>
+          </div>
+          <div class="header_menu2">
+            <div class="header_menu_box">
+              <a class="header_menu_join" href="${ContextPath}/member/join">
+                JOIN
+              </a>
+            </div>
+            <div class="header_menu_box">
+              <a class="header_menu_login" href="${ContextPath}/member/login">
+                LOGIN
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+    <div class="body_container">
+      <div class="my_page_edit_wrapper">
+        <div class="my_page_edit_container">
+          <div class="my_page_edit_box">
+            <h1>EDIT PAGE</h1>
+          </div>
+          <form
+            action="${pageContext.request.contextPath}/member/edit"
+            method="post"
+            class="my_page_edit_form"
+          >
+            <div class="my_page_edit_input_gourp">
+              <label for="my_input1">email</label>
+              <input
+                type="text"
+                id="my_input1"
+                class="my_email"
+                value="${sessionScope.loggedUser.name}"
+                readonly
+              />
+            </div>
+            <div class="my_page_edit_input_gourp">
+              <label for="my_input2">nickname</label>
+              <input
+                type="text"
+                id="my_input2"
+                class="my_password"
+                placeholder="${sessionScope.loggedUser.nickname}"
+              />
+            </div>
+            <div class="my_page_edit_input_gourp">
+              <label for="my_input3">password</label>
+              <input
+                type="text"
+                id="my_input3"
+                class="my_password"
+                placeholder="${sessionScope.loggedUser.pw}"
+              />
+            </div>
+            <input type="submit" class="edit_submit" value="EDIT" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

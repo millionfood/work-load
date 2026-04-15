@@ -1,0 +1,121 @@
+.join_page_wrapper {
+  width: 100%;
+  height: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 150px;
+}
+.join_page_container {
+  width: 600px;
+  height: 100%;
+  background-color: #3b4890;
+  display: grid;
+  grid-template-rows: 0.5fr 1.5fr 1fr;
+  padding-top: 70px;
+  padding-bottom: 100px;
+}
+/* join_page_box 첫번째 요소 - h1의 부모 */
+.join_page_box:nth-of-type(1) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.join_page_box:nth-of-type(1) h1 {
+  font-size: 40px;
+  font-weight: 600;
+  color: white;
+}
+/* join_page_box 두번째 요소 - form의 부모 */
+.join_page_box:nth-of-type(2) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.join_page_form {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.join_page_input_gourp {
+  width: 100%;
+}
+.join_page_input_gourp label {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.join_page_input_gourp input {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 10px;
+}
+.join_submit {
+  width: 150px;
+  height: 45px;
+  background-color: white;
+  border-style: none;
+  margin-top: 30px;
+  border-radius: 15px;
+  font-weight: 600;
+}
+/* join_page_box 세번째 요소 - sns 로그인 부모 */
+.join_page_box:nth-of-type(3) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.join_naver_container {
+  display: block;
+  text-decoration: none;
+}
+.join_naver_box {
+  width: 350px;
+  height: 50px;
+  background-color: #069f62;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 15px;
+}
+.join_naver_box span {
+  color: white;
+  font-size: 17px;
+}
+.join_naver_box span:first-of-type {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.join_naver_box span:first-of-type {
+  margin-right: 10px;
+}
+.join_kakao_container {
+  display: block;
+  text-decoration: none;
+}
+.join_kakao_box {
+  width: 350px;
+  height: 50px;
+  background-color: #ffdc00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+}
+
+.join_kakao_box i {
+  color: #3c1e1e;
+  margin-right: 10px;
+  font-size: 17px;
+}
+.join_kakao_box span {
+  color: #3c1e1e;
+  font-size: 17px;
+}
