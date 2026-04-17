@@ -22,4 +22,20 @@
         <beans:property name="maxUploadSize" value="10485760" /> 
         <beans:property name="defaultEncoding" value="UTF-8" />
     </beans:bean>
+    <interceptors>
+    	<interceptor>
+    		<mapping path="/members/**"/>
+    		<mapping path="/board/**"/>
+    		<exclude-mapping path="/members/login"/>
+    		<exclude-mapping path="/members/logout"/>
+    		<exclude-mapping path="/board/list"/>
+    		<exclude-mapping path="/board/detail"/>
+    		<beans:bean class="com.fmc.interceptor.AuthMemberInterceptor"/>
+    	</interceptor>
+    	<interceptor>
+    		<mapping path="/members/login"/>
+    		<mapping path="/members/join"/>
+    		<beans:bean class="com.fmc.interceptor.GuestOnlyInterceptor"/>
+    	</interceptor>
+    </interceptors>
 </beans:beans>

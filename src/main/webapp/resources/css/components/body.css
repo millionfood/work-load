@@ -1,5 +1,9 @@
 @charset "UTF-8";
+.body_wrapper {
+  height: 200vh;
+}
 .body_container {
+  height: 100%;
   padding-top: 80px;
   padding-bottom: 500px;
 }

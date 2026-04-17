@@ -7,8 +7,12 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous"> 
 	<link rel="stylesheet" href="${ContextPath}/resources/css/styles.css">
+	<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
 </head>
 <body>
 	<div class="body_wrapper">
@@ -23,10 +27,10 @@
               <p>WORK_LOG</p>
             </div>
             <div class="home_box_gotoboard_container">
-              <div class="home_box_gotoboard_box">
+              <a class="home_box_gotoboard_box" href="${ContextPath}/board/list">
                 <span>게시판으로 이동</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </div>
+                <i class="fa-solid fa-arrow-right"></i>  
+              </a>
             </div>
           </div>
           <div class="home_box">

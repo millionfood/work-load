@@ -1,5 +1,15 @@
 package com.fmc.domain;
 
-public class ReplyVO {
+import java.time.LocalDateTime;
 
+import lombok.Data;
+
+@Data
+public class ReplyVO {
+	private int rno;
+	private int bno;
+	private String replyText;
+	private int writer;
+	private LocalDateTime regdate;
+	private LocalDateTime updateDate;
 }

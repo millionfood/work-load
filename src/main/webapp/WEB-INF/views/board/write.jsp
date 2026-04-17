@@ -1,0 +1,139 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="tag" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set value="${pageContext.request.contextPath}" var="ContextPath"></c:set>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="${ContextPath}/resources/css/styles.css">
+	<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+	<link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- include summernote css/js -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+</head>
+<body>
+	<div class="body_wrapper">
+		<tag:nav></tag:nav>
+		<tag:bodyContainer>
+			<div class="board_write_wrapper">
+				<div class="board_write_container">
+				<div class="board_write_header_box">
+					<div class="board_write_header_title">
+					<span>WORK_LOG</span>
+					</div>
+					<div class="board_write_header_subtitle">
+					<span>게시글 작성</span>
+					</div>
+				</div>
+				<div class="board_write_content_box">
+					<div class="board_write_content">
+					<form action="/board/write" method="post">
+						<div class="board_write_content_title_writer_date_box">
+							<div class="board_write_content_title">
+								<span>제목</span>
+								<input type="text" name="title" />
+							</div>
+							<div class="board_write_content_writer">
+								<span>작성자</span>
+								<input type="text" name="writer" value="${loggedMember.nickname}" readonly/>
+							</div>
+							<div class="board_write_content_date">
+								<span>날짜</span>
+								<input type="text" name="date" value="${serverTime}" />
+							</div>
+							</div>
+							<textarea name="content" id="summernote"></textarea>
+							<div class="board_write_content_address_box">
+							<div class="board_write_content_address_input">
+								<span>근무지 주소</span>
+								<input type="text" name="address"/>
+							</div>
+							<div class="board_write_content_address_img"></div>
+							</div>
+							<div class="board_write_content_button_box">
+							<button type="button" onclick="history.back()">뒤로가기</button>
+							<button>등록</button>
+						</div>
+					</form>
+					</div>
+				</div>
+				</div>
+			</div>
+		</tag:bodyContainer>
+	</div>
+	<script>
+      $(document).ready(function () {
+        $("#summernote").summernote({
+          height: 400, // 에디터 높이
+          minHeight: null, // 최소 높이
+          maxHeight: null, // 최대 높이
+          focus: true, // 에디터 로딩 후 포커스 설정
+          lang: "ko-KR", // 한글 설정
+          placeholder: "내용을 입력해주세요.",
+          toolbar: [
+            // [groupName, [write of button]]
+            ["fontname", ["fontname"]],
+            ["fontsize", ["fontsize"]],
+            [
+              "style",
+              ["bold", "italic", "underline", "strikethrough", "clear"],
+            ],
+            ["color", ["forecolor", "color"]],
+            ["table", ["table"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["height", ["height"]],
+            ["insert", ["picture", "link", "video"]],
+            ["view", ["fullscreen", "help"]],
+          ],
+          fontNames: [
+            "Arial",
+            "Arial Black",
+            "Comic Sans MS",
+            "Courier New",
+            "맑은 고딕",
+            "궁서",
+            "굴림체",
+            "굴림",
+            "돋움체",
+            "바탕체",
+          ],
+          fontSizes: [
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "24",
+            "28",
+            "30",
+            "36",
+            "48",
+            "64",
+            "82",
+            "150",
+          ],
+        });
+      });
+    </script>
+</body>
+</html>

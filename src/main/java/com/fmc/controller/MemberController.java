@@ -19,15 +19,16 @@ import com.fmc.dto.MemberJoinDTO;
 import com.fmc.dto.MemberLoginDTO;
 import com.fmc.service.MemberService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/members")
+@RequiredArgsConstructor
 @Slf4j
 public class MemberController {
 	
-	@Autowired
-	private MemberService memberService;
+	private final MemberService memberService;
 	
 	//login
 	@GetMapping("/login")

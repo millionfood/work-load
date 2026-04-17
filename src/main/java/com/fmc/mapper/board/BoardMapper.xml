@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.fmc.mapper.board.BoardMapper">
+ 	<insert id="insert" useGeneratedKeys="true" keyProperty="bno">
+ 		INSERT INTO
+ 			BOARD(title,content,writer,address,viewcnt)
+ 		VALUES
+ 			(#{title},#{content},#{writer},#{address},#{viewcnt})
+ 	</insert>
+ 	<select id="getPostDetail" resultType="com.fmc.dto.BoardDetailDTO">
+		SELECT
+			 b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt
+		FROM
+			BOARD b
+		JOIN
+			MEMBER m 
+		ON
+			b.writer = m.mno
+		WHERE
+			b.bno = #{bno}
+ 	</select>
+ 	<select id="getPostList" resultType="com.fmc.dto.BoardDetailDTO">
+ 		SELECT
+ 			b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt
+		FROM
+			BOARD b
+		JOIN
+			MEMBER m
+		ON
+			b.writer = m.mno
+ 	</select>
+ 	<select id="getPostListWithPaging" resultType="com.fmc.dto.BoardDetailDTO">
+ 		SELECT
+ 			b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt
+		FROM
+			BOARD b
+		JOIN
+			MEMBER m
+		ON
+			b.writer = m.mno
+		LIMIT #{skip}, #{amount}
+ 	</select>
+ 	<select id="getTotalCount" resultType="int">
+ 		SELECT COUNT(*) FROM board
+ 	</select>
+ 	<update id="update">
+ 		UPDATE
+ 			BOARD
+		SET
+			title=#{title},
+			updatedate=NOW(),
+			content=#{content},
+			address=#{address}
+		WHERE
+			bno = #{bno}
+ 	</update>
+ 	<delete id="deletePost">
+ 		DELETE
+ 		FROM
+ 			BOARD
+ 		WHERE
+ 			bno =#{bno}
+ 	</delete>
+ </mapper>

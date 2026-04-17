@@ -59,11 +59,12 @@
   margin-bottom: 10px;
 }
 .edit_submit {
-  background-color: #d32f2f;
+  background-color: white;
   border-style: none;
   padding: 15px 50px;
   border-radius: 15px;
   font-size: 17px;
   font-weight: 600;
   margin-top: 30px;
+  color: black;
 }

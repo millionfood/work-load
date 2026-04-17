@@ -1,0 +1,203 @@
+.board_detail_wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.board_detail_container {
+  width: 800px;
+  height: 100%;
+  margin-top: 80px;
+}
+.board_detail_header_box {
+  width: 100%;
+  height: 80px;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.board_detail_header_box span {
+  font-size: 17px;
+  font-weight: 600;
+}
+.board_detail_header_title {
+  background-color: #3b4890;
+  width: 100%;
+  height: 30px;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+}
+.board_detail_header_title span {
+  color: white;
+}
+.board_detail_header_subtitle {
+  background-color: #d9d9d9;
+  width: 100%;
+  height: 50px;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+/* board_detail_content_box */
+.board_detail_content_box {
+  width: 100%;
+}
+.board_detail_content {
+  width: 100%;
+  padding: 20px;
+}
+.board_detail_content:nth-of-type(1) {
+  width: 100%;
+  background-color: #3b4890;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.board_detail_content_title {
+  margin-bottom: 10px;
+}
+.board_detail_content_title span {
+  font-size: 20px;
+  color: white;
+}
+.board_detail_content_detail {
+  display: flex;
+  justify-content: space-between;
+}
+.board_detail_content_detail span {
+  font-size: 13px;
+  color: white;
+}
+
+.board_detail_content:nth-of-type(2) {
+  width: 100%;
+  min-height: 200px;
+  border: 1px solid #3b4890;
+  border-bottom: none;
+}
+.board_detail_content:nth-of-type(3) {
+  width: 100%;
+  border: 1px solid #3b4890;
+  border-bottom: none;
+}
+.board_detail_content:nth-of-type(4) {
+  width: 100%;
+  min-height: 350px;
+  border: 1px solid #3b4890;
+  border-bottom: none;
+}
+.board_detail_content:nth-of-type(5) {
+  width: 100%;
+  border: 1px solid #3b4890;
+  border-bottom: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.board_detail_content:nth-of-type(5) a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3b4890;
+  text-decoration: none;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 10px;
+}
+.board_detail_content:nth-of-type(5) a span {
+  color: white;
+  white-space: nowrap;
+}
+.board_detail_content:nth-of-type(5) button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3b4890;
+  color: white;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 10px;
+  border-style: none;
+}
+.board_detail_content:nth-of-type(6) {
+  width: 100%;
+  border: 1px solid #3b4890;
+  border-bottom: none;
+}
+.board_detail_content:nth-of-type(6) span {
+  font-size: 13px;
+}
+.board_detail_content:nth-of-type(7) {
+  width: 100%;
+  border: 1px solid #3b4890;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.board_detail_content:nth-of-type(7) textarea {
+  height: 60px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.board_detail_content:nth-of-type(7) button {
+  background-color: #3b4890;
+  height: 40px;
+  padding: 0 20px;
+  color: white;
+  border-style: none;
+  border-radius: 10px;
+}
+.board_detail_content_comment {
+  width: 100%;
+  /* height: 80px; */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #3b4890;
+  margin-bottom: 10px;
+}
+.board_detail_content_comment > div:nth-of-type(1) {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+.board_detail_content_comment div:nth-of-type(2) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.board_detail_content_comment div:nth-of-type(2) span {
+  font-size: 13px;
+}
+.board_detail_content_comment div:nth-of-type(2) div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.board_detail_content_comment div:nth-of-type(2) div button {
+  background-color: #3b4890;
+  height: 20px;
+  padding: 12px 10px;
+  color: white;
+  border-style: none;
+  border-radius: 5px;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.board_detail_content8 {
+  width: 100%;
+  height: 60px;
+  background-color: #3b4890;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
