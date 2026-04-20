@@ -10,4 +10,31 @@
 		VALUES
 			(#{bno},#{replyText},#{writer})
 	</insert>
+	<select id="getReplyListWithBoard" resultType="com.fmc.dto.ReplyDetailDTO">
+		SELECT
+			r.rno,r.bno,m.mno,m.nickname,r.replytext,r.updatedate AS updateDate
+		FROM 
+			REPLY r
+		JOIN
+			MEMBER m
+		ON
+			r.writer = m.mno
+		WHERE
+			r.bno = #{bno}
+	</select>
+	<update id="update">
+		UPDATE
+			REPLY
+		SET
+			replytext = #{replyText}
+		WHERE
+			rno = #{rno} 
+	</update>
+	<delete id="delete">
+		DELETE
+		FROM
+			REPLY
+		WHERE
+			rno = #{rno}
+	</delete>
 </mapper>

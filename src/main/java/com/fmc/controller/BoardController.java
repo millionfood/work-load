@@ -24,11 +24,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fmc.domain.BoardVO;
 import com.fmc.domain.MemberVO;
+import com.fmc.domain.ReplyVO;
 import com.fmc.dto.BoardDetailDTO;
 import com.fmc.dto.BoardRegisterDTO;
 import com.fmc.dto.Criteria;
 import com.fmc.dto.pageDTO;
 import com.fmc.service.BoardService;
+import com.fmc.service.ReplyService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
 	private final BoardService boardService;
+	private final ReplyService replyService;
 	
 	//게시물 조회 - 전체
 	@GetMapping("/list")
@@ -60,6 +63,7 @@ public class BoardController {
 	public String boardDetail(@PathVariable("id")int id, Model model) {
 		BoardDetailDTO dto = boardService.getPostDetail(id);
 		model.addAttribute("board",dto);
+		
 		return "board/detail";
 	}
 	

@@ -49,60 +49,72 @@
       </header>
     </div>
     <div class="body_container">
-      <div class="board_edit_wrapper">
-        <div class="board_edit_container">
-          <div class="board_edit_header_box">
-            <div class="board_edit_header_title">
+      <div class="board_detail_wrapper">
+        <div class="board_detail_container">
+          <div class="board_detail_header_box">
+            <div class="board_detail_header_title">
               <span>WORK_LOG</span>
             </div>
-            <div class="board_edit_header_subtitle">
-              <span>게시글 작성</span>
+            <div class="board_detail_header_subtitle">
+              <span>게시글 확인</span>
             </div>
           </div>
-          <div class="board_edit_content_box">
-            <div class="board_edit_content">
-              <form action="/board/edit/${board.bno}" method="post">
-                <div class="board_edit_content_title_edit_date_box">
-                  <div class="board_edit_content_title">
-                    <span>제목</span>
-                    <input type="text" name="title" value="${board.title}" />
-                  </div>
-                  <div class="board_edit_content_editr">
-                    <span>작성자</span>
-                    <input
-                      type="text"
-                      name="writer"
-                      value="${board.nickname}"
-                      readonly
-                    />
-                  </div>
-                  <div class="board_edit_content_date">
-                    <span>날짜</span>
-                    <input type="text" name="date" value="${serverTime}" />
-                  </div>
-                </div>
-                <textarea name="content" id="summernote">
-${board.content}</textarea
-                >
-                <div class="board_edit_content_address_box">
-                  <div class="board_edit_content_address_input">
-                    <span>근무지 주소</span>
-                    <input
-                      type="text"
-                      name="address"
-                      value="${board.address}"
-                    />
-                  </div>
-                  <div class="board_edit_content_address_img"></div>
-                </div>
-                <div class="board_edit_content_button_box">
-                  <button>등록</button>
-                  <button type="button" onclick="history.back()">
-                    뒤로가기
-                  </button>
-                </div>
+          <div class="board_detail_content_box">
+            <div class="board_detail_content">
+              <div class="board_detail_content_title">
+                <span>${board.title}</span>
+              </div>
+              <div class="board_detail_content_detail">
+                <span>작성자:${board.nickname} | ${board.updateDate}</span>
+                <span>조회수:${board.viewcnt} | 댓글:{board.replyCnt}개</span>
+              </div>
+            </div>
+            <div class="board_detail_content">${board.content}</div>
+            <div class="board_detail_content">
+              <span>주소 : ${board.address}</span>
+            </div>
+            <div class="board_detail_content"></div>
+            <div class="board_detail_content">
+              <a href="${pageContextPath}/board/edit/${board.bno}">
+                <span>수정</span>
+              </a>
+              <button type="button" class="deletePostBtn">삭제</button>
+            </div>
+            <div class="board_detail_content">
+              <span>댓글 {board.replyCnt}개</span>
+            </div>
+            <div class="board_detail_reply_form_box">
+              <form>
+                <textarea name="reply" id="replyContent"></textarea>
+                <button type="button" onclick="addReply()">댓글작성</button>
               </form>
             </div>
+            <div class="board_detail_content_comment" id="reply-list-container">
+              <div
+                class="board_detail_content_comment_item"
+                id="reply_content_box_\${reply.rno}"
+              >
+                <textarea
+                  name="reply"
+                  id="replyEditContent"
+                  class="reply_edit_content_textarea"
+                  placeholder="\${textContent}"
+                ></textarea>
+                <div class="reply_edit_content_button_box">
+                  <button type="button" onclick="showList()">취소</button>
+                  <button type="button" onclick="updateReply(\${rno})">
+                    댓글작성
+                  </button>
+                </div>
+              </div>
+            </div>
+            <form
+              action="${pageContextPath}/board/delete"
+              class="deletePostForm"
+              method="post"
+            >
+              <input type="hidden" name="bno" value="${board.bno}" />
+            </form>
           </div>
         </div>
       </div>
