@@ -6,13 +6,19 @@
  <mapper namespace="com.fmc.mapper.board.BoardMapper">
  	<insert id="insert" useGeneratedKeys="true" keyProperty="bno">
  		INSERT INTO
- 			BOARD(title,content,writer,address,viewcnt)
+ 			BOARD(title,content,writer,address,lat,lng)
  		VALUES
- 			(#{title},#{content},#{writer},#{address},#{viewcnt})
+ 			(#{title},#{content},#{writer},#{address},#{lat},#{lng})
+ 	</insert>
+ 	<insert id="insertAttach">
+ 		INSERT INTO
+ 			ATTACH(uuid,bno,uploadpath,filename,filetype)
+ 		VALUES
+ 			(#{uuid},#{bno},#{uploadPath},#{fileName},#{fileType})
  	</insert>
  	<select id="getPostDetail" resultType="com.fmc.dto.BoardDetailDTO">
 		SELECT
-			 b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt
+			 b.bno,m.mno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt,b.replycnt,b.lat,b.lng
 		FROM
 			BOARD b
 		JOIN
@@ -24,27 +30,124 @@
  	</select>
  	<select id="getPostList" resultType="com.fmc.dto.BoardDetailDTO">
  		SELECT
- 			b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt
+ 			b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt,b.replycnt
 		FROM
 			BOARD b
 		JOIN
 			MEMBER m
 		ON
 			b.writer = m.mno
+ 	</select>
+ 	<select id="getPostListWithPopular" resultType="com.fmc.dto.BoardDetailDTO">
+ 		SELECT
+ 			b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt,b.replycnt
+		FROM
+			BOARD b
+		JOIN
+			MEMBER m
+		ON
+			b.writer = m.mno
+		ORDER BY b.viewcnt DESC
+		LIMIT 0, 10
+ 	</select>
+ 	<select id="getPostListByMnoAll" resultType="com.fmc.dto.BoardDetailDTO">
+ 		SELECT
+ 			b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt,b.replycnt
+ 		FROM 
+ 			BOARD b
+ 		JOIN 
+ 			MEMBER m
+ 		ON 
+ 			b.writer = m.mno
+ 		WHERE
+ 			m.mno = #{mno}
  	</select>
  	<select id="getPostListWithPaging" resultType="com.fmc.dto.BoardDetailDTO">
  		SELECT
- 			b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt
+ 			b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt,b.replycnt
 		FROM
 			BOARD b
 		JOIN
 			MEMBER m
 		ON
 			b.writer = m.mno
+		<where>
+			<if test="searchType != null and searchType != ''">
+				<if test="searchType == 'title'">
+					AND b.title LIKE CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'writer'">
+					AND m.nickname LIKE CONCAT('%', #{keyword}, '%')
+				</if>
+			</if>
+		</where>
+		ORDER BY b.bno DESC
 		LIMIT #{skip}, #{amount}
  	</select>
+ 	<select id="getPostListByMnoWithPaging" resultType="com.fmc.dto.BoardDetailDTO">
+ 		SELECT
+ 			b.bno,b.title,b.content,m.nickname,b.address,b.updateDate,b.viewcnt,b.replycnt
+		FROM
+			BOARD b
+		JOIN
+			MEMBER m
+		ON
+			b.writer = m.mno
+		WHERE
+			b.writer = #{mno}
+		ORDER BY b.bno DESC
+		LIMIT #{cri.skip}, #{cri.amount}
+ 	</select>
  	<select id="getTotalCount" resultType="int">
- 		SELECT COUNT(*) FROM board
+ 		SELECT COUNT(*) FROM board b JOIN member m
+ 		ON b.writer = m.mno
+ 		<where>
+			<if test="searchType != null and searchType != ''">
+				<choose>
+					<when test="searchType == 'title'">
+					AND b.title LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="searchType == 'writer'">
+						AND m.nickname LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+				</choose>
+			</if>
+		</where>
+ 	</select>
+ 	<select id="getSummernoteListByMno" resultType="String">
+ 		SELECT
+ 			content
+ 		FROM
+ 			BOARD
+ 		WHERE
+ 			writer = {mno}
+ 	</select>
+ 	<select id="getAttachList" resultType="com.fmc.domain.AttachVO">
+ 		SELECT
+ 			uuid,bno,uploadpath,filename,filetype
+ 		FROM
+ 			ATTACH
+ 		WHERE
+ 			bno = #{bno}
+ 	</select>
+ 	<select id="getAttachListByMno" resultType="com.fmc.domain.AttachVO">
+ 		SELECT 
+			a.uuid,a.bno,a.uploadpath AS uploadPath,a.filename AS fileName, a.filetype AS fileType 
+		FROM 
+			ATTACH a
+		INNER JOIN 
+			board b 
+		ON 
+			a.bno = b.bno
+		WHERE b.writer = #{mno}
+ 	</select>
+ 	<select id="getAttachByUUID" resultType="com.fmc.domain.AttachVO">
+ 		SELECT
+ 			uuid,bno,uploadpath,filename,filetype
+ 		FROM
+ 			attach
+ 		WHERE
+ 			uuid = #{uuid}
  	</select>
  	<update id="update">
  		UPDATE
@@ -53,15 +156,60 @@
 			title=#{title},
 			updatedate=NOW(),
 			content=#{content},
-			address=#{address}
+			address=#{address},
+			lat=#{lat},
+			lng=#{lng}
 		WHERE
 			bno = #{bno}
  	</update>
- 	<delete id="deletePost">
+ 	<update id="updateViewCount">
+ 		UPDATE
+ 			BOARD
+ 		SET
+ 			viewcnt = viewcnt+1
+		WHERE
+			bno = #{bno}
+ 			
+ 	</update>
+ 	<update id="updateReplyCount">
+ 		UPDATE
+ 			BOARD
+ 		SET
+ 			replycnt = replycnt + #{cnt}
+ 		WHERE
+ 			bno = #{bno}
+ 	</update>
+ 	<delete id="deletePostByBno">
  		DELETE
  		FROM
  			BOARD
  		WHERE
  			bno =#{bno}
+ 	</delete>
+ 	<delete id="deletePostByMno">
+ 		DELETE
+ 		FROM
+ 			BOARD
+ 		WHERE
+ 			writer =#{mno}
+ 	</delete>
+ 	<delete id="deleteAttachByUUID">
+ 		DELETE
+ 		FROM
+ 			ATTACH
+ 		WHERE
+ 			uuid = #{uuid}
+ 	</delete>
+ 	<delete id="deleteAttachByMno">
+ 		DELETE
+ 			a
+ 		FROM
+ 			ATTACH a
+ 		JOIN 
+ 			BOARD b
+ 		ON 
+ 			a.bno = b.bno
+ 		WHERE
+ 			b.writer = #{mno}
  	</delete>
  </mapper>

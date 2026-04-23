@@ -12,7 +12,7 @@
 	</insert>
 	<select id="getReplyListWithBoard" resultType="com.fmc.dto.ReplyDetailDTO">
 		SELECT
-			r.rno,r.bno,m.mno,m.nickname,r.replytext,r.updatedate AS updateDate
+			r.rno,r.bno,m.mno,m.nickname,r.replytext,r.regdate AS regDate
 		FROM 
 			REPLY r
 		JOIN
@@ -22,6 +22,27 @@
 		WHERE
 			r.bno = #{bno}
 	</select>
+	<select id="getReplyListWithMember" resultType="com.fmc.dto.ReplyDetailDTO">
+		SELECT
+			r.rno,r.bno,m.mno,m.nickname,r.replytext,r.regdate AS regDate
+		FROM 
+			REPLY r
+		JOIN
+			MEMBER m
+		ON
+			r.writer = m.mno
+		WHERE
+			r.writer = #{mno}
+		LIMIT #{cri.skip},#{cri.amount}
+	</select>
+	<select id="getTotalCountWithBoard" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			REPLY
+		WHERE
+			bno = #{bno};
+	</select>
 	<update id="update">
 		UPDATE
 			REPLY
@@ -30,11 +51,25 @@
 		WHERE
 			rno = #{rno} 
 	</update>
-	<delete id="delete">
+	<delete id="deleteByRno">
 		DELETE
 		FROM
 			REPLY
 		WHERE
 			rno = #{rno}
+	</delete>
+	<delete id="deleteByMno">
+		DELETE
+		FROM
+			REPLY
+		WHERE
+			writer=#{mno}
+	</delete>
+	<delete id="deleteByBno">
+		DELETE
+		FROM
+			REPLY
+		WHERE
+			bno=#{bno}
 	</delete>
 </mapper>

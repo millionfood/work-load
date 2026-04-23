@@ -12,7 +12,6 @@
     <properties>
         <java-version>11</java-version>
         <org.springframework-version>5.3.18</org.springframework-version>
-        <org.aspectj-version>1.9.7</org.aspectj-version>
         <org.slf4j-version>1.7.32</org.slf4j-version>
     </properties>
 <!-- 설계도 여기 적는다해서 라이브러리가 다운되지는 않는다. 대신 나중에 이 라이브러리를 썼을 경우
@@ -159,6 +158,24 @@
 		    <groupId>org.hibernate.validator</groupId>
 		    <artifactId>hibernate-validator</artifactId>
 		    <version>6.0.13.Final</version>
+		</dependency>
+	<!-- 비밀번호 해싱 처리 -->
+		<dependency>
+		    <groupId>org.mindrot</groupId>
+		    <artifactId>jbcrypt</artifactId>
+		    <version>0.4</version>
+		</dependency>
+	<!-- aop -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjrt</artifactId>
+		    <version>1.9.6</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.9.6</version>
 		</dependency>
     </dependencies>
 

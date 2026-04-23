@@ -6,6 +6,8 @@ import lombok.Data;
 public class Criteria {
 	private int pageNum;
 	private int amount;
+	private String keyword ="";
+	private String searchType ="";
 	
 	//기본 생성자 : 처음 접속 시 1페이지, 10개씩 설정
 	public Criteria() {

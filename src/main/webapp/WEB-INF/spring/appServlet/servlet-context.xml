@@ -3,23 +3,29 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:beans="http://www.springframework.org/schema/beans"
     xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 <!-- 어노테이션 활성화(스위치) -->
     <annotation-driven />
+    <aop:aspectj-autoproxy/> 
 <!-- 정적 자원 관리(img,css,js) -->
     <resources mapping="/resources/**" location="/resources/" />
+    <resources mapping="/upload/**" location="file:///C:/dev/upload/summernote/"></resources>
 <!-- 화면 경로 해결사 (컨트롤러가 home을 return하면 앞뒤로 경로와 확장자를 붙여줌) -->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/views/" />
         <beans:property name="suffix" value=".jsp" />
     </beans:bean>
-<!-- 해당 위치의 @Controller 가 붙은 클래스를 자동으로 메모리에 올림 -->    
+<!-- 해당 위치의 @Component 가 붙은 클래스를 자동으로 메모리에 올림 -->    
+	<context:component-scan base-package="com.fmc.aop"/>
     <context:component-scan base-package="com.fmc.controller" />
+    
 <!-- 이미지/파일 업로드를 가능하게 해주는 부품 -->    
     <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <beans:property name="maxUploadSize" value="10485760" /> 
+        <beans:property name="maxUploadSize" value="104857600" /> 
         <beans:property name="defaultEncoding" value="UTF-8" />
     </beans:bean>
     <interceptors>
@@ -27,9 +33,9 @@
     		<mapping path="/members/**"/>
     		<mapping path="/board/**"/>
     		<exclude-mapping path="/members/login"/>
-    		<exclude-mapping path="/members/logout"/>
+    		<exclude-mapping path="/members/join"/>
     		<exclude-mapping path="/board/list"/>
-    		<exclude-mapping path="/board/detail"/>
+    		<exclude-mapping path="/board/detail/**"/>
     		<beans:bean class="com.fmc.interceptor.AuthMemberInterceptor"/>
     	</interceptor>
     	<interceptor>

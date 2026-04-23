@@ -2,16 +2,19 @@ package com.fmc.mapper.reply;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.fmc.domain.ReplyVO;
+import com.fmc.dto.Criteria;
 import com.fmc.dto.ReplyDetailDTO;
 
 public interface ReplyMapper {
 	
 	public int insert(ReplyVO vo);
 	
-	public List<ReplyDetailDTO> getReplyListWithBoard(Long bno);
+	public List<ReplyDetailDTO> getReplyListWithBoard(int bno);
 	
-	public List<ReplyDetailDTO> getReplyListWithMember(Long mno);
+	public List<ReplyDetailDTO> getReplyListWithMember(@Param("mno")int mno,@Param("cri")Criteria cri);
 	
 	public int getTotalCountWithBoard(int bno);
 	
@@ -19,6 +22,10 @@ public interface ReplyMapper {
 	
 	public int update(ReplyDetailDTO dto);
 	
-	public int delete(Long rno);
+	public int deleteByRno(Long rno);
+	
+	public int deleteByMno(int mno);
+	
+	public int deleteByBno(int bno);
 
 }

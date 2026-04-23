@@ -13,12 +13,12 @@
     		<div class="header_menu2">
 		      <div class="header_menu_box">
 		        <a class="header_menu_join" href="${ContextPath}/members/join">
-		          join
+		          회원가입
 		        </a>
 		      </div>
 		      <div class="header_menu_box">
 		        <a class="header_menu_login" href="${ContextPath}/members/login">
-		          login
+		          로그인
 		        </a>
 		      </div>
 		    </div>
@@ -27,13 +27,22 @@
     		<div class="header_menu2">
 		      <div class="header_menu_box">
 		        <a class="header_menu_join" href="${ContextPath}/members/logout">
-		          logout
+		          로그아웃
 		        </a>
 		      </div>
 		      <div class="header_menu_box">
-		        <a class="header_menu_login" href="${ContextPath}/members/mypage">
-		          mypage
-		        </a>
+			  	<c:choose>
+			  		<c:when test="${loggedMember.role == 'USER'}">
+						<a class="header_menu_login" href="${ContextPath}/members/mypage-user/board">
+							마이페이지
+						</a>
+					</c:when>
+					<c:otherwise>
+						<a class="header_menu_login" href="${ContextPath}/members/mypage-admin/member">
+							관리자페이지
+						</a>
+					</c:otherwise>
+				</c:choose>
 		      </div>
 		    </div>
     	</c:otherwise>

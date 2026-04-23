@@ -1,5 +1,7 @@
 package com.fmc.mapper.member;
 
+import java.util.List;
+
 import com.fmc.domain.MemberVO;
 
 public interface MemberMapper {
@@ -8,10 +10,14 @@ public interface MemberMapper {
 	
 	public MemberVO getMemberEmail(String email);
 	
+	public MemberVO getMemberByMno(int mno);
+	
+	public List<MemberVO> getMemberList ();
+	
 	public int checkMember(String email);
 	
 	public int updateMember(MemberVO vo);
 
-	public int deleteMember(String email);
+	public int deleteMember(int mno);
 	
 }

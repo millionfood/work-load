@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set value="${pageContext.request.contextPath}" var="ContextPath"></c:set>
+<c:set var ="num" value="${pageMaker.total -((pageMaker.cri.pageNum -1)*pageMaker.cri.amount)}"></c:set>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -18,6 +19,7 @@
 <body>
 	<div class="body_wrapper">
 		<tag:nav></tag:nav>
+		<tag:flash></tag:flash>
 		<tag:bodyContainer>
 			<div class="board_list_wrapper">
 				<div class="board_list_container">
@@ -31,14 +33,14 @@
 					</div>
 					<div class="board_list_content_box">
 						<div class="board_list_content_search">
-						<span>${listCnt}개의 게시물</span>
+						<span>${pageMaker.total}개의 게시물</span>
 						<div class="board_list_content_search_form">
-							<form action="${ContextPath}/board/list" method="get">
+							<form action="" method="get">
 							<select name="searchType">
-								<option value="title">제목</option>
-								<option value="writer">작성자</option>
+								<option value="title" <c:if test="${pageMaker.cri.searchType eq 'title' }">selected</c:if>>제목</option>
+								<option value="writer" <c:if test="${pageMaker.cri.searchType eq 'writer' }">selected</c:if>>작성자</option>
 							</select>
-							<input type="text" />
+							<input type="text" name="keyword" value="${pageMaker.cri.keyword}" placeholder	="검색어를 입력해주세요"/>
 							<button class="board_list_content_search_btn">검색</button>
 							</form>
 						</div>
@@ -55,18 +57,20 @@
 								<th>작성자</th>
 								<th>날짜</th>
 								<th>조회수</th>
+								<th>댓글</th>
 							</tr>
 							</thead>
 							<tbody class="board_list_content_list_tbody">
-							<c:forEach items="${list}" var="board">
+							<c:forEach items="${list}" var="board" varStatus="status">
 								<tr class="board_list_content_list_tbody_tr">
-								<td>${board.bno}</td>
-								<td><a href="${ContextPath }/board/detail/${board.bno}">${board.title}</a></td>
-								<td>${board.nickname}</td>
-								<td>
-									${board.formattedUpdateDate }
-								</td>
-								<td>${board.viewcnt}</td>
+									<td>${num - status.index}</td>
+									<td><a href="${ContextPath }/board/detail/${board.bno}">${board.title}</a></td>
+									<td>${board.nickname}</td>
+									<td>
+										${board.formattedUpdateDate }
+									</td>
+									<td>${board.viewcnt}</td>
+									<td>${board.replycnt}</td>
 								</tr>
 							</c:forEach>
 							</tbody>
@@ -76,17 +80,17 @@
 							<ul>
 								<c:if test="${pageMaker.prev }">
 									<li>
-										<a href="${ContextPath }/board/list?pageNum=${pageMaker.startPage -1}">이전</a>
+										<a href="${ContextPath }/board/list?searchType=${pageMaker.cri.searchType }&keyword=${pageMaker.cri.keyword}&pageNum=${pageMaker.startPage -1}">이전</a>
 									</li>
 								</c:if>
 								<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
 									<li>
-										<a href="${ContextPath }/board/list?pageNum=${num}" class="${pageMaker.cri.pageNum == num ? 'page_btn_active' : '' }">${num }</a>
+										<a href="${ContextPath }/board/list?searchType=${pageMaker.cri.searchType }&keyword=${pageMaker.cri.keyword}&pageNum=${num}" class="${pageMaker.cri.pageNum == num ? 'page_btn_active' : '' }">${num }</a>
 									</li>
 								</c:forEach>
 								<c:if test="${pageMaker.next }">
 									<li>
-										<a href="${ContextPath }/board/list?pageNum=${pageMaker.endPage +1}">다음</a>
+										<a href="${ContextPath }/board/list?searchType=${pageMaker.cri.searchType }&keyword=${pageMaker.cri.keyword}&pageNum=${pageMaker.endPage +1}">다음</a>
 									</li>
 								</c:if>
 							</ul>

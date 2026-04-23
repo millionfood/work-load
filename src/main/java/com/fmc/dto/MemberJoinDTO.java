@@ -13,7 +13,7 @@ public class MemberJoinDTO {
 	@Email(message = "올바른 이메일 형식이 아닙니다.")
 	private String email;
 	@NotBlank(message = "비밀번호는 필수 입력 값입니다.")
-	@Size(min=8,max=20, message = "비밀번호는 8자~16자 사이여야 합니다.")
+	@Size(min=4,max=16, message = "비밀번호는 4자~16자 사이여야 합니다.")
 	private String pw;
 	private String pwConfirm;
 	@NotBlank(message = "닉네임은 필수 입력 값입니다.")

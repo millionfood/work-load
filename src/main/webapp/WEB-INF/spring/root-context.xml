@@ -4,12 +4,16 @@
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
     xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
         http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
-        http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd">
+        http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+<!-- aop -->
+    <aop:aspectj-autoproxy/> 
 <!-- 파일을 읽어와서 값을 꺼내 쓸 수 있게 해준다. - 사용규칙은 없고 꺼내쓸 때 안에 있는 변수명과 일치하기만 하면 됨 -->
-    <context:property-placeholder location="classpath:db.properties"/>
+    <context:property-placeholder location="classpath:app.properties"/>
 <!-- 데이터베이스와 연결되는 통로를 만드는 객체 -->
     <bean id="dataSource" class="org.mariadb.jdbc.MariaDbPoolDataSource" destroy-method="close">
         <property name="url" value="${db.url}"/>
@@ -22,6 +26,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 <!-- 해당 패키지 안에 있는 클래스들 중 @Component 계열의 어노테이션을 자동으로 찾아 등록 -->
+    <context:component-scan base-package="com.fmc.aop"/>
     <context:component-scan base-package="com.fmc.service"/>
 <!-- 해당 패키지 않에 있는 인터페이스들은 자동으로 MyBatis Mapper로 등록 -->
     <mybatis-spring:scan base-package="com.fmc.mapper"/>

@@ -1,6 +1,6 @@
 .my_page_edit_wrapper {
   width: 100%;
-  height: 1200px;
+  /* height: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,18 +8,16 @@
 }
 .my_page_edit_container {
   width: 600px;
-  height: 100%;
   background-color: #3b4890;
   display: grid;
-  grid-template-rows: 0.5fr 1.5fr 1fr;
+  grid-template-rows: 0.5fr 1.5fr;
   padding-top: 70px;
-  padding-bottom: 100px;
+  padding-bottom: 70px;
   padding-right: 125px;
   padding-left: 125px;
 }
 .my_page_edit_form {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,6 +28,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
 }
 .my_page_edit_box:nth-of-type(1) h1 {
   font-size: 40px;

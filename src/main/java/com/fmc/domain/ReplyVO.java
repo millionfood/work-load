@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ReplyVO {
-	private int rno;
+	private Long rno;
 	private int bno;
 	private String replyText;
 	private int writer;

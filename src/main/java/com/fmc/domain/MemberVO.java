@@ -1,6 +1,7 @@
 package com.fmc.domain;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import lombok.Data;
 
@@ -13,4 +14,9 @@ public class MemberVO {
 	private LocalDateTime regdate;
 	private LocalDateTime updateDate;
 	private MemberRole role = MemberRole.USER;
+	
+	public String getFormattedRegDate() {
+		if(this.regdate == null) return "";
+		return this.regdate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	}
 }

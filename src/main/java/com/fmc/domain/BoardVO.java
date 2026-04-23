@@ -14,4 +14,7 @@ public class BoardVO {
 	private LocalDateTime regdate;
 	private LocalDateTime updateDate;
 	private int viewcnt;
+	private int replycnt;
+	private double lat; //위도(Latitude)
+	private double lng; //경도(Longitude)
 }

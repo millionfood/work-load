@@ -46,17 +46,8 @@
 		                name="nickname"
 		                id="my_input2"
 		                class="my_password"
-		                placeholder="${loggedMember.nickname}"
-		              />
-		            </div>
-		            <div class="my_page_edit_input_gourp">
-		              <label for="my_input3">password</label>
-		              <input
-		                type="text"
-		                name="pw"
-		                id="my_input3"
-		                class="my_password"
-		                placeholder="${loggedMember.pw}"
+		                value="${loggedMember.nickname}"
+						required
 		              />
 		            </div>
 		            <input type="submit" class="edit_submit" value="EDIT" />

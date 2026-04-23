@@ -99,7 +99,11 @@
   text-align: center;
 }
 
-/* board_write_content form textarea */
+/* board_write_content_file_input_box */
+.board_write_content_file_input_box {
+  width: 100%;
+  margin-bottom: 20px;
+}
 
 /* board_write_content_address_box */
 .board_write_content_address_box {

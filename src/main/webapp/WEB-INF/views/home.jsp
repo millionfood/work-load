@@ -17,6 +17,7 @@
 <body>
 	<div class="body_wrapper">
 		<tag:nav></tag:nav>
+		<tag:flash></tag:flash>
 		<tag:bodyContainer>
 			 <div class="home_wrapper">
         <div class="home_container">
@@ -38,78 +39,18 @@
               <span>인기글</span>
             </div>
             <div class="home_box_board_post">
-              <div class="home_box_board_post_content">
-                <div class="home_box_board_post_img">
-                  <img src="" alt="" />
+              <c:forEach items="${list}" var="board">
+                <div class="home_box_board_post_content">
+                  <div class="home_box_board_post_img">
+                    <img src="${board.thumbnail}" alt="" />
+                  </div>
+                  <div class="home_box_board_post_text">
+                    <a href="${ContextPath}/board/detail/${board.bno}"><span>${board.title}</span></a>
+                    <span>조회수:${board.viewcnt}</span>
+                    <span>댓글:${board.replycnt}</span>
+                  </div>
                 </div>
-                <div class="home_box_board_post_text">
-                  <span>오늘 너무 힘든 하루였다.</span>
-                </div>
-              </div>
-              <div class="home_box_board_post_content">
-                <div class="home_box_board_post_img">
-                  <img src="" alt="" />
-                </div>
-                <div class="home_box_board_post_text">
-                  <span>일마치고 치맥 한잔 인증샷~</span>
-                </div>
-              </div>
-              <div class="home_box_board_post_content">
-                <div class="home_box_board_post_img">
-                  <img src="" alt="" />
-                </div>
-                <div class="home_box_board_post_text">
-                  <span>이직 조언 구해요..</span>
-                </div>
-              </div>
-              <div class="home_box_board_post_content">
-                <div class="home_box_board_post_img">
-                  <img src="" alt="" />
-                </div>
-                <div class="home_box_board_post_text">
-                  <span>오늘 너무 힘든 하루였다.</span>
-                </div>
-              </div>
-              <div class="home_box_board_post_content">
-                <div class="home_box_board_post_img">
-                  <img src="" alt="" />
-                </div>
-                <div class="home_box_board_post_text">
-                  <span>일마치고 치맥 한잔 인증샷~</span>
-                </div>
-              </div>
-              <div class="home_box_board_post_content">
-                <div class="home_box_board_post_img">
-                  <img src="" alt="" />
-                </div>
-                <div class="home_box_board_post_text">
-                  <span>이직 조언 구해요..</span>
-                </div>
-              </div>
-              <div class="home_box_board_post_content">
-                <div class="home_box_board_post_img">
-                  <img src="" alt="" />
-                </div>
-                <div class="home_box_board_post_text">
-                  <span>오늘 너무 힘든 하루였다.</span>
-                </div>
-              </div>
-              <div class="home_box_board_post_content">
-                <div class="home_box_board_post_img">
-                  <img src="" alt="" />
-                </div>
-                <div class="home_box_board_post_text">
-                  <span>일마치고 치맥 한잔 인증샷~</span>
-                </div>
-              </div>
-              <div class="home_box_board_post_content">
-                <div class="home_box_board_post_img">
-                  <img src="" alt="" />
-                </div>
-                <div class="home_box_board_post_text">
-                  <span>이직 조언 구해요..</span>
-                </div>
-              </div>
+              </c:forEach>
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@
 <mapper namespace="com.fmc.mapper.member.MemberMapper">
 	<insert id="insert" useGeneratedKeys="true" keyProperty="mno">
 		INSERT INTO
-		MEMBER(email,pw,nickname,member_role)
+		MEMBER(email,pw,nickname,role)
 		VALUES(#{email},#{pw},#{nickname},#{role})
 	</insert>
 	<select id="getMemberEmail" resultType="com.fmc.domain.MemberVO">
@@ -16,6 +16,22 @@
 			MEMBER
 		WHERE
 			email = #{email}
+	</select>
+	<select id="getMemberByMno" resultType="com.fmc.domain.MemberVO">
+		SELECT 
+			*
+		FROM 
+			MEMBER
+		WHERE
+			mno = #{mno}
+	</select>
+	<select id="getMemberList" resultType="com.fmc.domain.MemberVO">
+		SELECT
+			*
+		FROM
+			MEMBER
+		WHERE
+			role = "USER"
 	</select>
 	<select id="checkMember" resultType="int">
 		SELECT 
@@ -38,6 +54,6 @@
 		FROM
 			MEMBER
 		WHERE
-			email = #{email}
+			mno = #{mno}
 	</delete>
 </mapper>

@@ -100,7 +100,29 @@
 }
 
 /* board_edit_content form textarea */
-
+.board_write_content_file_input_box {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.board_edit_upload_result {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+}
+.board_edit_upload_result > span {
+  font-size: 20px;
+  font-weight: 600;
+}
+.board_edit_upload_result li {
+  display: flex;
+}
+.board_edit_upload_result li div {
+  display: flex;
+  gap: 10px;
+}
 /* board_edit_content_address_box */
 .board_edit_content_address_box {
   width: 100%;

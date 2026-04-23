@@ -43,3 +43,11 @@
   gap: 100px;
   align-items: center;
 }
+.header_menu_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header_menu_box a {
+  white-space: nowrap;
+}

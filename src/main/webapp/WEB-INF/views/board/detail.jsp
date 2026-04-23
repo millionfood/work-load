@@ -14,10 +14,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<%-- kakaoMap --%>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&libraries=services"></script>
 </head>
 <body>
 	<div class="body_wrapper">
 		<tag:nav></tag:nav>
+		<tag:flash></tag:flash>
 		<tag:bodyContainer>
 			<div class="board_detail_wrapper">
 				<div class="board_detail_container">
@@ -35,30 +38,54 @@
 							<span>${board.title}</span>
 						</div>
 						<div class="board_detail_content_detail">
-							<span>작성자:${board.nickname} | ${board.updateDate}</span>
-							<span>조회수:${board.viewcnt} | 댓글:{board.replyCnt}개</span>
+							<span>작성자:${board.nickname} | ${board.formattedUpdateDateDetail}</span>
+							<span class="board_detail_content_detail_cnt">조회수:${board.viewcnt} | 댓글:${board.replycnt}개</span>
 						</div>
 					</div>
 					<div class="board_detail_content">${board.content}</div>
+					<div class="board_detail_upload_result">
+						<span>첨부파일 목록</span>
+						<c:forEach items="${attachList }" var="attach">
+							<li data-uuid="${attach.uuid}" data-path="${attach.uploadPath}" data-filename="${attach.fileName}">
+				                <div>
+				                    <span> ${attach.fileName}</span><br>
+				                    <c:url value="/board/file/download" var="downloadUrl">
+									    <c:param name="uuid" value="${attach.uuid}" />
+									    <c:param name="uploadPath" value="${attach.uploadPath}" />
+									    <c:param name="fileName" value="${attach.fileName}" /> 
+								    </c:url>
+				                    <a href="${downloadUrl }">
+				                        [다운로드]
+				                    </a>
+				                </div>
+				            </li>
+						</c:forEach>
+					</div>
 					<div class="board_detail_content">
-						<span>주소 : ${board.address}</span>
+						<span>회사 주소 : ${board.address}</span>
 					</div>
-					<div class="board_detail_content"></div>
-					<div class="board_detail_content">
-						<a href="${pageContextPath}/board/edit/${board.bno}">
-							<span>수정</span>
-						</a>
-						<button type="button" class="deletePostBtn">삭제</button>
+					<div class="board_detail_content_address_box">
+						<div class="board_detail_content_address_img" id="map" style="width: 500px; height: 400px"></div>
 					</div>
 					<div class="board_detail_content">
-					<span>댓글 {board.replyCnt}개</span>
+						<c:if test="${loggedMember.mno eq board.mno }">
+							<a href="${pageContextPath}/board/edit/${board.bno}">
+								<span>수정</span>
+							</a>
+							<button type="button" class="deletePostBtn">삭제</button>
+						</c:if>
 					</div>
-					<div class="board_detail_reply_form_box">
-						<form>
-							<textarea name="reply" id="replyContent"></textarea>
-							<button type="button" onclick="addReply()">댓글작성</button>
-						</form>
+					<div class="board_detail_content">
+					<span id="board_detail_content_reply_count">댓글 ${board.replycnt}개</span>
 					</div>
+					<c:if test="${not empty loggedMember}">
+						<div class="board_detail_reply_form_box">
+							<form>
+								<textarea name="reply" id="replyContent"></textarea>
+								<button type="button" onclick="addReply()">댓글작성</button>
+							</form>
+						</div>
+					</c:if>
 					<div class="board_detail_content_comment" id="reply-list-container">
 					</div>
 					<form action="${pageContextPath}/board/delete" class="deletePostForm" method="post">
@@ -70,8 +97,33 @@
 		</tag:bodyContainer>
 	</div>
 	<script type="text/javascript">
+		let loggedMemberMno = -1;
 		const deleteBtn = document.querySelector(".deletePostBtn");
 		const deleteForm = document.querySelector(".deletePostForm");
+		const replyCntSpan = document.querySelector("#board_detail_content_reply_count");
+		const viewCntAndReplyCnt = document.querySelector(".board_detail_content_detail_cnt");
+		let replyCnt = ${board.replycnt};
+
+		<c:if test="${not empty loggedMember}">
+			loggedMemberMno = ${loggedMember.mno}
+		</c:if>
+
+		//카카오 지도
+		var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+        var options = {
+          //지도를 생성할 때 필요한 기본 옵션
+          center: new kakao.maps.LatLng(${board.lat}, ${board.lng}), //지도의 중심좌표.
+          level: 3, //지도의 레벨(확대, 축소 정도)
+        };
+
+        var map = new kakao.maps.Map(container, options);
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        var marker = new kakao.maps.Marker({
+            position: new kakao.maps.LatLng(${board.lat}, ${board.lng}), // 초기 위치
+            map: map // 마커가 표시될 지도 객체
+        });
+
 		let isEditForm;
 		
 		if(deleteBtn){
@@ -100,22 +152,24 @@
 							html += `
 							<div class="board_detail_content_comment_item" id="reply_content_box_\${reply.rno}">
 								<div>
-									<span id="'reply_content_'+\${reply.rno}">\${reply.replyText}</span>
+									<span id="reply_content_\${reply.rno}">\${reply.replyText}</span>
 								</div>
 								<div>
 									<span
-									>\${reply.nickname}님이 \${reply.updateDate}에 작성한 댓글
+									>\${reply.nickname}님이 \${reply.regDate} 에 작성한 댓글
 									</span>
-									<div>
-										<button type="button" onclick="editReplyMode(\${reply.rno},\${reply.replyText})">수정</button>
-										<button type="button" onclick="deleteReply(\${reply.rno})">삭제</button>
-									</div>
+									\${loggedMemberMno == reply.mno ? `
+										<div>
+											<button type="button" onclick="editReplyMode(\${reply.rno},'\${reply.replyText}')">수정</button>
+											<button type="button" onclick="deleteReply(\${reply.bno},\${reply.rno})">삭제</button>
+										</div>
+									`:''}
 								</div>
 							</div>
-							`
+							`;
 						});
 					}else{
-						html = "<p>등록된 댓글이 업습니다.</p>"
+						html = "<p>등록된 댓글이 없습니다.</p>"
 					}
 					listContainer.html(html);
 				},
@@ -140,25 +194,7 @@
 					replyText:replyText,
 					writer:"${loggedMember.mno}"
 			}
-			//3.fetch를 이용한 비동기 요청
-			<%-- fetch("/reply/new",{
-				method:'POST',
-				headers:{
-					'Content-Type':'application/json'
-				},
-				body : JSON.stringify(replyData)
-			})
-			.then(response =>  response.text())
-			.then(data =>{
-				if(data === "success"){
-					alert("댓글이 등록되었습니다.");
-					document.getElementById("replyContent").value = "";
-				}
-			})
-			.catch(error => {
-				alert("댓글 등록에 실패했습니다.");
-				console.error("Error : ",error);
-			}) --%>
+	
 			//3.jquery ajax 호출
 			$.ajax({
 				type:"POST",
@@ -169,6 +205,8 @@
 					if(result === "success"){
 						alert("댓글이 등록되었습니다.");
 						$("#replyContent").val("")
+						$(replyCntSpan).text("댓글 "+(++replyCnt)+" 개");
+						$(viewCntAndReplyCnt).text("조회수:"+${board.viewcnt}+" | 댓글:"+(replyCnt)+"개")
 						showList();
 					}
 				},
@@ -195,7 +233,7 @@
                 <div class="reply_edit_content_button_box">
                   <button type="button" onclick="showList()">취소</button>
                   <button type="button" onclick="updateReply(\${rno})">
-                    댓글작성
+                    수정완료
                   </button>
                 </div>
 			`;
@@ -228,16 +266,18 @@
 			})
 			
 		}
-		function deleteReply(rno){
+		function deleteReply(bno,rno){
 			if(!confirm("이 댓글을 삭제하시겠습니까?")){
 				return
 			}
 			$.ajax({
 				type:"DELETE",
-				url:"${ContextPath}/reply/delete/"+rno,
+				url:"${ContextPath}/reply/delete/"+bno+"/"+rno,
 				success:function(result){
 					if(result === "success"){
 						alert("댓글이 삭제되었습니다.");
+						$(replyCntSpan).text("댓글 "+(--replyCnt)+" 개");
+						$(viewCntAndReplyCnt).text("조회수:"+${board.viewcnt}+" | 댓글:"+(replyCnt)+"개")
 						showList();
 					}
 				},
@@ -248,4 +288,5 @@
 			})
 		}
 	</script>
+</body>
 </html>

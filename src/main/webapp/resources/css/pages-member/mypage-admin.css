@@ -1,16 +1,15 @@
-.my_page_wrapper {
+.my_page_admin_wrapper {
   width: 100%;
-  height: 100%;
-  /* min-height: 600px; */
+  min-height: 1200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 150px;
 }
-.my_page_container {
+.my_page_admin_container {
   width: 600px;
-  /* height: 100%; */
+  height: 100%;
   background-color: #3b4890;
   display: grid;
   grid-template-rows: 0.5fr 1.5fr 1fr;
@@ -19,54 +18,52 @@
   padding-right: 125px;
   padding-left: 125px;
 }
-/* my_page_box 첫번째 요소 - h1의 부모 */
-.my_page_box:nth-of-type(1) {
+/* my_page_admin_box 첫번째 요소 - h1의 부모 */
+.my_page_admin_box:nth-of-type(1) {
   display: flex;
-  height: 100%;
   justify-content: center;
   align-items: center;
 }
-.my_page_box:nth-of-type(1) h1 {
+.my_page_admin_box:nth-of-type(1) h1 {
   font-size: 40px;
   font-weight: 600;
-  /* padding: 20px 0; */
   color: white;
 }
-/* my_page_box 두번째 요소 - form의 부모 */
-.my_page_box:nth-of-type(2) {
+/* my_page_admin_box 두번째 요소 - form의 부모 */
+.my_page_admin_box:nth-of-type(2) {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.my_page_input_gourp {
+.my_page_admin_input_gourp {
   width: 100%;
 }
-.my_page_input_gourp label {
+.my_page_admin_input_gourp label {
   color: white;
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 10px;
 }
-.my_page_input_gourp input {
+.my_page_admin_input_gourp input {
   width: 100%;
   height: 50px;
   margin-bottom: 10px;
 }
 
-/* my_page_box 세번째 요소 -  edit,delete */
-.my_page_box:nth-of-type(3) {
+/* my_page_admin_box 세번째 요소 -  edit,delete */
+.my_page_admin_box:nth-of-type(3) {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.my_page_edit_link {
+.my_page_admin_edit_link {
   display: block;
   text-decoration: none;
 }
-.my_page_edit_link_box {
+.my_page_admin_edit_link_box {
   width: 150px;
   height: 50px;
   background-color: white;
@@ -75,15 +72,15 @@
   align-items: center;
   border-radius: 15px;
 }
-.my_page_edit_link_box span {
+.my_page_admin_edit_link_box span {
   color: black;
   font-size: 17px;
 }
-.my_page_delete_link {
+.my_page_admin_delete_link {
   display: block;
   text-decoration: none;
 }
-.my_page_delete_link_box {
+.my_page_admin_delete_link_box {
   width: 150px;
   height: 50px;
   background-color: #d32f2f;
@@ -93,11 +90,13 @@
   border-radius: 15px;
 }
 
-.my_page_delete_link_box span {
+.my_page_admin_delete_link_box span {
   color: white;
   font-size: 17px;
 }
-.my_page_controller_container {
+
+/* admin info list  */
+.my_page_admin_controller_container {
   width: 100%;
   /* height: 100%; */
   margin-top: 20px;
@@ -108,14 +107,14 @@
   align-items: center;
   border-top: 3px solid black;
 }
-.my_page_controller_menu_box {
+.my_page_admin_controller_menu_box {
   width: 600px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
   margin: 20px 0;
 }
-.my_page_controller_menu {
+.my_page_admin_controller_menu {
   width: 100%;
   height: 50px;
   display: flex;
@@ -126,17 +125,17 @@
   color: white;
   text-decoration: none;
 }
-.my_page_controller_menu:hover {
+.my_page_admin_controller_menu:hover {
   text-decoration: none;
   color: white;
 }
 
-.my_page_controller_list_container {
+.my_page_admin_controller_list_container {
   width: 1200px;
   border-top: 2px solid #3b4890;
 }
 
-.my_page_controller_list_box {
+.my_page_admin_controller_list_box {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -144,32 +143,32 @@
   align-items: center;
 }
 
-.my_page_controller_list_title_board {
+.my_page_admin_controller_list_title_member {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 3fr 1fr 1fr 0.5fr 0.5fr;
+  grid-template-columns: 1fr 1fr 3fr 1fr 0.4fr;
   padding: 20px 0;
   border-bottom: 1px solid #3b4890;
 }
-.my_page_controller_list_title_board span {
+.my_page_admin_controller_list_title_member span {
   text-align: center;
   font-weight: 600;
 }
-.my_page_controller_list_info_board {
+.my_page_admin_controller_list_info_member {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 3fr 1fr 1fr 0.5fr 0.5fr;
+  grid-template-columns: 1fr 1fr 3fr 1fr 0.4fr;
   padding: 20px 0;
   border-bottom: 1px solid #3b4890;
 }
-.my_page_controller_list_info_board span,
-.my_page_controller_list_info_board a {
+.my_page_admin_controller_list_info_member span,
+.my_page_admin_controller_list_info_member a {
   white-space: nowrap;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.my_page_controller_list_info_board button {
+.my_page_admin_controller_list_info_member button {
   border-style: none;
   border-radius: 15px;
   padding: 5px 20px;
@@ -177,32 +176,33 @@
   color: white;
 }
 
-.my_page_controller_list_title_reply {
+.my_page_admin_controller_list_title_board {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 3fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 3fr 1fr 1fr 0.5fr;
   padding: 20px 0;
   border-bottom: 1px solid #3b4890;
 }
-.my_page_controller_list_title_reply span {
+.my_page_admin_controller_list_title_board span {
   text-align: center;
   font-weight: 600;
 }
-.my_page_controller_list_info_reply {
+.my_page_admin_controller_list_info_board {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 3fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 3fr 1fr 1fr 0.5fr;
   padding: 20px 0;
   border-bottom: 1px solid #3b4890;
 }
-.my_page_controller_list_info_reply span,
-.my_page_controller_list_info_reply a {
+.my_page_admin_controller_list_info_board span,
+.my_page_admin_controller_list_info_board a {
   white-space: nowrap;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: black;
 }
-.my_page_controller_list_info_reply button {
+.my_page_admin_controller_list_info_board button {
   border-style: none;
   border-radius: 15px;
   padding: 5px 20px;
