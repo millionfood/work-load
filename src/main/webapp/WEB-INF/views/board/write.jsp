@@ -89,6 +89,34 @@
 		</tag:bodyContainer>
 	</div>
 	<script>
+      var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|jsp|asp|php|js)$");
+      var maxSize = 10485760; 
+      function checkExtension(fileName, fileSize) {
+          if (fileSize >= maxSize) {
+              alert("파일 사이즈 초과");
+              return false;
+          }
+
+          if (regex.test(fileName)) {
+              alert("해당 종류의 파일은 업로드할 수 없습니다.");
+              return false;
+          }
+          return true;
+      }
+
+      // 파일 선택 시 이벤트
+      $("input[type='file']").change(function(e) {
+          var formData = new FormData();
+          var inputFile = $("input[name='uploadFile']");
+          var files = inputFile[0].files;
+
+          for (var i = 0; i < files.length; i++) {
+              if (!checkExtension(files[i].name, files[i].size)) {
+                  $(this).val(""); // 잘못된 파일이면 비워줌
+                  return false;
+              }
+          }
+      });
       $(document).ready(function () {
         $("#summernote").summernote({
           height: 400, // 에디터 높이
@@ -97,6 +125,8 @@
           focus: true, // 에디터 로딩 후 포커스 설정
           lang: "ko-KR", // 한글 설정
           placeholder: "내용을 입력해주세요.",
+          codeviewFilter: true,           // 코드 보기 모드에서 스크립트 필터링 활성화
+          codeviewIframeFilter: true,
           toolbar: [
             // [groupName, [write of button]]
             ["fontname", ["fontname"]],
@@ -153,6 +183,7 @@
           }
         });
       });
+      //textarea가 비어있으면 등록 막음
       $("#write_form").on("submit",function(e){
         var content = $('#summernote').summernote('code');
 

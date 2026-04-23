@@ -51,7 +51,7 @@ public interface BoardMapper {
 	public int insertAttach(AttachVO vo);
 	
 	//attach - get
-	public List<AttachVO> getAttachList (int bno);
+	public List<AttachVO> getAttachListByBno (int bno);
 	
 	public List<AttachVO> getAttachListByMno (int mno);
 	
@@ -61,4 +61,6 @@ public interface BoardMapper {
 	public int deleteAttachByUUID(String uuid);
 	
 	public int deleteAttachByMno(int mno);
+	
+	public int deleteAttachByBno(int bno);
 }

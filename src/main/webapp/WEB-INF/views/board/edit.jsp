@@ -100,8 +100,8 @@
 		                <div class="board_edit_content_address_box">
 		                  <div class="board_edit_content_address_input">
 		                    <span>회사 주소</span>
-		                    <input type="hidden" name="lat" id="lat">
-                        <input type="hidden" name="lng" id="lng">
+		                    <input type="hidden" name="lat" id="lat" value="${board.lat}">
+                        <input type="hidden" name="lng" id="lng" value="${board.lng}">
                         <input type="text" name="address" onclick="onPostCode(event)" id="kakaoInput" value="${board.address}" required/>
 		                  </div>
 		                  <div class="board_edit_content_address_img" id="map" style="width: 500px; height: 400px"></div>
@@ -120,6 +120,35 @@
 		</tag:bodyContainer>
 	</div>
 	<script>
+      var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|jsp|asp|php|js)$");
+      var maxSize = 10485760; 
+      function checkExtension(fileName, fileSize) {
+          if (fileSize >= maxSize) {
+              alert("파일 사이즈 초과");
+              return false;
+          }
+
+          if (regex.test(fileName)) {
+              alert("해당 종류의 파일은 업로드할 수 없습니다.");
+              return false;
+          }
+          return true;
+      }
+
+      // 파일 선택 시 이벤트
+      $("input[type='file']").change(function(e) {
+          var formData = new FormData();
+          var inputFile = $("input[name='uploadFile']");
+          var files = inputFile[0].files;
+
+          for (var i = 0; i < files.length; i++) {
+              if (!checkExtension(files[i].name, files[i].size)) {
+                  $(this).val(""); // 잘못된 파일이면 비워줌
+                  return false;
+              }
+          }
+      });
+      
       $(document).ready(function () {
         $(".attach_delete_btn").on("click", function() {
         if(confirm("이 파일을 삭제하시겠습니까? (수정 완료 시 실제로 삭제됩니다)")) {
@@ -141,6 +170,8 @@
           focus: true, // 에디터 로딩 후 포커스 설정
           lang: "ko-KR", // 한글 설정
           placeholder: "내용을 입력해주세요.",
+          codeviewFilter: true,           // 코드 보기 모드에서 스크립트 필터링 활성화
+          codeviewIframeFilter: true,
           toolbar: [
             // [groupName, [write of button]]
             ["fontname", ["fontname"]],

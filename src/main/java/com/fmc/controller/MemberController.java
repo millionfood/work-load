@@ -79,7 +79,7 @@ public class MemberController {
 		//검사결과 에러가 하나라도 있다면
 		if(result.hasErrors()) {
 			String errMsg = result.getFieldError().getDefaultMessage();
-			rttr.addFlashAttribute("fail", "회원가입에 실패했습니다.");
+			rttr.addFlashAttribute("fail", errMsg);
 			log.error("올바른 회원가입 정보가 아닙니다. : {}",errMsg);
 			return "redirect:/members/join";
 		}

@@ -11,9 +11,13 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Safelist;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.HtmlUtils;
 
 import com.fmc.domain.AttachVO;
 import com.fmc.domain.BoardVO;
@@ -131,7 +135,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	@Override
 	public List<AttachVO> getAttachList(int bno){
-		return boardMapper.getAttachList(bno);
+		return boardMapper.getAttachListByBno(bno);
 	}
 	@Override
 	@Transactional
@@ -160,10 +164,10 @@ public class BoardServiceImpl implements BoardService{
 		if(deleteFiles != null) {
 			for(String uuid : deleteFiles) {
 				try {
-					deleteLocalFiles(uuid);
+					deleteLocalFilesByUUID(uuid);
 				} catch (RuntimeException e) {
-					throw new LocalFileException("첨부파일 삭제에 실패했습니다.",e);
-				}
+					throw e;
+				} 
 			}
 		}
 		//첨부 파일 업로드
@@ -215,22 +219,24 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	@Transactional
 	public void deletePostOne(int bno) {
+		//summernote 삭제를 위해 미리 불러오기
 		BoardDetailDTO dto = boardMapper.getPostDetail(bno);
+		//attach 로컬 파일 미리 불러오기
+		List<AttachVO> avoList = boardMapper.getAttachListByBno(bno);
 		//reply 삭제
 		replyService.deleteReplyByBoard(bno);
-		
+		//attach 삭제
+		boardMapper.deleteAttachByBno(bno);
 		//db에서 게시물 삭제
 		int bcnt = boardMapper.deletePostByBno(bno);
 		if(bcnt == 0) {
 			throw new PersistenceException("게시물 삭제에 실패했습니다. - db");
 		}
-		
-		//attach 로컬 파일 삭제 
-		List<AttachVO> avoList = boardMapper.getAttachList(bno);
+		//로컬에 있는 attach 삭제
 		if(avoList != null) {
 			for(AttachVO avo : avoList) {
 				try {
-					deleteLocalFiles(avo.getUuid());
+					deleteLocalFiles(avo);
 				} catch (Exception e) {
 					throw new LocalFileException("첨부파일 삭제에 실패했습니다.",e);
 				}
@@ -263,7 +269,7 @@ public class BoardServiceImpl implements BoardService{
 		if(avoList != null) {
 			for(AttachVO avo : avoList) {
 				try {
-					deleteLocalFiles(avo.getUuid());
+					deleteLocalFiles(avo);
 				} catch (Exception e) {
 					throw new LocalFileException("첨부파일 삭제에 실패했습니다.",e);
 				}
@@ -298,17 +304,26 @@ public class BoardServiceImpl implements BoardService{
 		}
 	}
 	//첨부파일 삭제 메서드
-	private void deleteLocalFiles(String uuid) {
-		AttachVO avo = boardMapper.getAttachByUUID(uuid);
-		
+	private void deleteLocalFiles(AttachVO avo) {
 		if(avo!=null) {
 			String fullFileName = avo.getUuid()+"_"+avo.getFileName();
 			Path path = Paths.get(uploadAttachPath,avo.getUploadPath(),fullFileName);
+			log.info("삭제 경로 :" +path.toAbsolutePath());
+			File file = path.toFile();
+			if(file.exists()) file.delete();
+		}
+	}
+	public void deleteLocalFilesByUUID(String uuid) {
+		AttachVO avo = boardMapper.getAttachByUUID(uuid);
+		if(avo!=null) {
+			String fullFileName = avo.getUuid()+"_"+avo.getFileName();
+			Path path = Paths.get(uploadAttachPath,avo.getUploadPath(),fullFileName);
+			log.info("삭제 경로 :" +path.toAbsolutePath());
 			File file = path.toFile();
 			if(file.exists()) file.delete();
 			
-			int cnt = boardMapper.deleteAttachByUUID(uuid);
-			if(cnt == 0) throw new PersistenceException("첨부파일 삭제에 실패했습니다. - db");
+			int rcnt = boardMapper.deleteAttachByUUID(uuid);
+			if(rcnt == 0) throw new PersistenceException("Attach delete 중 에러 발생");
 		}
 	}
 	

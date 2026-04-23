@@ -69,9 +69,6 @@ public class ReplyServiceImpl implements ReplyService{
 	@Transactional
 	public void deleteReplyByBoard(int bno) {
 		int rcnt = replyMapper.deleteByBno(bno);
-		if(rcnt == 0) {
-			throw new ApiException("삭제에 실패했습니다.");
-		}
 	}
 	//댓글 삭제하면서 게시물의 댓글 카운트를 내려줌(댓글만 한개 삭제할 때 사용)
 	@Override

@@ -176,6 +176,12 @@
 		    <groupId>org.aspectj</groupId>
 		    <artifactId>aspectjweaver</artifactId>
 		    <version>1.9.6</version>
+		</dependency>	
+	<!-- xss 공격 방어 -->		
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.17.2</version>
 		</dependency>
     </dependencies>
 

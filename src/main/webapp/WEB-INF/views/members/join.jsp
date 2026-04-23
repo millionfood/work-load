@@ -13,15 +13,17 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="body_wrapper">
 		<tag:nav></tag:nav>
+		<tag:flash></tag:flash>
 		<tag:bodyContainer>
 			<div class="join_page_wrapper">
 		        <div class="join_page_container">
 		          <div class="join_page_box">
-		            <h1>WELLCOME</h1>
+		            <h1>회원가입</h1>
 		          </div>
 		          <div class="join_page_box">
 		            <form
@@ -76,24 +78,29 @@
 		              <input type="submit" class="join_submit" value="JOIN" />
 		            </form>
 		          </div>
-		          <div class="join_page_box">
-		            <a href="/" class="join_naver_container">
-		              <div class="join_naver_box">
-		                <span>N</span>
-		                <span>Join with Naver</span>
-		              </div>
-		            </a>
-		            <a href="/" class="join_kakao_container">
-		              <div class="join_kakao_box">
-		                <i class="fas fa-comment"></i>
-		                <span>Join with Kakao</span>
-		              </div>
-		            </a>
-		          </div>
+		          
 		        </div>
 		      </div>
 		</tag:bodyContainer>
 	</div>
-	
+	<script>
+		$(document).ready(function() {
+		$(".join_page_form").on("submit", function(e) {
+			
+			// 비밀번호와 비밀번호 확인 값 가져오기
+			var pw = $("#join_input3").val();
+			var pwConfirm = $("#join_input4").val();
+
+			if (pw !== pwConfirm) {
+				alert("비밀번호와 비밀번호 확인 값이 일치하지 않습니다.");
+				
+				$("#join_input4").focus();
+				e.preventDefault(); 
+				return false;
+			}
+			
+		});
+});
+	</script>
 </body>
 </html>

@@ -11,7 +11,7 @@
   height: 100%;
   background-color: #3b4890;
   display: grid;
-  grid-template-rows: 0.5fr 1.5fr 1fr;
+  grid-template-rows: 0.5fr 1.5fr;
   padding-top: 70px;
   padding-bottom: 100px;
 }

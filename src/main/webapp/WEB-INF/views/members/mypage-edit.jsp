@@ -17,6 +17,7 @@
 <body>
 	<div class="body_wrapper">
 		<tag:nav></tag:nav>
+		<tag:flash></tag:flash>
 		<tag:bodyContainer>
 			<div class="my_page_edit_wrapper">
 		        <div class="my_page_edit_container">

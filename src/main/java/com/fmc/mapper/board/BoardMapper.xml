@@ -120,9 +120,9 @@
  		FROM
  			BOARD
  		WHERE
- 			writer = {mno}
+ 			writer = #{mno}
  	</select>
- 	<select id="getAttachList" resultType="com.fmc.domain.AttachVO">
+ 	<select id="getAttachListByBno" resultType="com.fmc.domain.AttachVO">
  		SELECT
  			uuid,bno,uploadpath,filename,filetype
  		FROM
@@ -199,6 +199,13 @@
  			ATTACH
  		WHERE
  			uuid = #{uuid}
+ 	</delete>
+ 	<delete id="deleteAttachByBno">
+ 		DELETE
+ 		FROM
+ 			ATTACH
+ 		WHERE
+ 			bno =#{bno}
  	</delete>
  	<delete id="deleteAttachByMno">
  		DELETE

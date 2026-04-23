@@ -18,6 +18,7 @@
 <body>
 	<div class="body_wrapper">
 		<tag:nav></tag:nav>
+		<tag:flash></tag:flash>
 		<tag:bodyContainer>
 			<div class="my_page_wrapper">
 		        <div class="my_page_container">
@@ -79,7 +80,7 @@
 									</div>
 									<c:forEach items="${list }" var="board">
 										<div class="my_page_controller_list_info_board">
-											<span class="my_page_controller_list_info_id">${board.mno }</span>
+											<span class="my_page_controller_list_info_id">${board.bno }</span>
 											<span class="my_page_controller_list_info_nickName">${board.title }</span>
 											<span class="my_page_controller_list_info_email">${board.nickname }</span>
 											<span class="my_page_controller_list_info_password">${board.updateDate }</span>

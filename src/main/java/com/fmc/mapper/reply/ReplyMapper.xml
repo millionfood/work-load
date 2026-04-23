@@ -33,6 +33,7 @@
 			r.writer = m.mno
 		WHERE
 			r.writer = #{mno}
+		ORDER BY r.rno DESC
 		LIMIT #{cri.skip},#{cri.amount}
 	</select>
 	<select id="getTotalCountWithBoard" resultType="int">

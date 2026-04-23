@@ -75,14 +75,15 @@ public class MemberServiceImpl implements MemberService{
 			replyService.deleteReplyByMember(mno);
 			//board삭제
 			boardService.deletePostByMember(mno);
-		} catch (RuntimeException e) {
+			log.info("여기까지는 성공");
+		} catch (PersistenceException e) {
 			// TODO: handle exception
-			throw new PersistenceException("계정 삭제에 실패했습니다.",e);
+			throw new PersistenceException("계정 삭제에 실패했습니다.ㅠㅠ",e);
 		}
 		//회원 삭제
 		int mcnt = memberMapper.deleteMember(mno);
 		if(mcnt == 0) {
-			throw new PersistenceException("계정 삭제에 실패했습니다.");
+			throw new PersistenceException("계정 삭제에 실패했습니다.ㅠㅠ");
 		}
 	}
 }

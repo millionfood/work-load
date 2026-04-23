@@ -17,11 +17,12 @@
 <body>
 	<div class="body_wrapper">
 		<tag:nav></tag:nav>
+    <tag:flash></tag:flash>
 		<tag:bodyContainer>
 			<div class="login_page_wrapper">
         <div class="login_page_container">
           <div class="login_page_box">
-            <h1>WELLCOME</h1>
+            <h1>로그인</h1>
           </div>
           <div class="login_page_box">
             <form
@@ -53,20 +54,6 @@
               </div>
               <input type="submit" class="login_submit" value="LOGIN" />
             </form>
-          </div>
-          <div class="login_page_box">
-            <a href="/" class="login_naver_container">
-              <div class="login_naver_box">
-                <span>N</span>
-                <span>Login with Naver</span>
-              </div>
-            </a>
-            <a href="/" class="login_kakao_container">
-              <div class="login_kakao_box">
-                <i class="fas fa-comment"></i>
-                <span>Login with Kakao</span>
-              </div>
-            </a>
           </div>
         </div>
       </div>

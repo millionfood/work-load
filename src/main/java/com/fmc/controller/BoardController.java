@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,7 @@ import com.fmc.dto.BoardDetailDTO;
 import com.fmc.dto.BoardRegisterDTO;
 import com.fmc.dto.Criteria;
 import com.fmc.dto.pageDTO;
+import com.fmc.exception.LocalFileException;
 import com.fmc.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -71,7 +73,10 @@ public class BoardController {
 		BoardVO bvo = dto.toVO();
 		MemberVO mvo = (MemberVO) session.getAttribute("loggedMember");
 		bvo.setWriter(mvo.getMno());
-		
+		//첨부파일 확인
+		if(!checkFile(uploadFile)) {
+			throw new LocalFileException("허용되지 않는 파일 입니다.");
+		}
 		boardService.insert(bvo,uploadFile);
 		return "redirect:/board/list";
 	}
@@ -151,11 +156,33 @@ public class BoardController {
 	}
 	//삭제 - 마이페이지에서
 	@PostMapping("/mypage/delete")
-	public String deletePostInMypage(@RequestParam("bno") int bno, HttpServletRequest request) {
+	public String deletePostInMypage(@RequestParam("bno") int bno, HttpServletRequest request,RedirectAttributes rttr) {
 		boardService.deletePostOne(bno);
+		rttr.addFlashAttribute("success", "게시물이 삭제되었습니다.");
 		String referer = request.getHeader("Referer");
 		
 		return "redirect:"+(referer != null? referer : "/");
+	}
+	//파일 넣기 전 검사
+	public boolean checkFile(MultipartFile[] uploadFiles){
+		if(uploadFiles == null || uploadFiles.length == 0 ) return true; 
+		for(MultipartFile uploadFile : uploadFiles) {
+			if(uploadFile.isEmpty()) continue;
+			String fileName = uploadFile.getOriginalFilename();
+			
+			if(fileName == null || !fileName.contains(".")) {
+				return false;
+			}
+			
+			String ext = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+			
+			List<String> allowedExt = Arrays.asList("jpg", "jpeg", "png", "gif", "pdf", "txt", "zip");
+			
+			if(!allowedExt.contains(ext)) {
+				return false;
+			}	
+		}
+		return true;
 	}
 	
 	//파일 다운로드
