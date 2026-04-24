@@ -54,7 +54,7 @@ aop, interceptor, controlleradvice 등의 개념을 통해<br />
 ## Summernote 에디터 & 이미지 바이너리 처리
 - Summernote를 이용해 작성 중인 이미지를 실시간으로 서버에 업로드 하고,
 - 반환된 경로를 HTML에 삽입하는 비동기 이미지 핸들링 로직을 구현했으며
-- 게시물 수정또는 삭제시 시 DB의 경로 데이터를 참조하여 서버 내 실제 물리 파일을 동기화 하여
+- 게시물 수정 및 삭제 시 DB의 경로 데이터를 참조하여 서버 내 실제 물리 파일을 동기화 하여
 - 삭제 또는 추가 함으로서 불필요한 스토리지 점유를 방지하고 리소스 관리 효율을 높였습니다.
  
 ![image](https://github.com/user-attachments/assets/e3204ce8-bf8f-4f0f-9ede-64e5ac58a40e)
@@ -138,76 +138,8 @@ aop, interceptor, controlleradvice 등의 개념을 통해<br />
 # 📝핵심기능 - 마이페이지(관리자)
 ![image](https://github.com/user-attachments/assets/455c8bda-1c10-49e1-bbf4-83456355ec13)
 
-# [Extra]
-- 기존에 spring boot와 jpa를 공부하고 있었고, 코딩테스트를 위해 c++을 공부했으며## 2.인터셉터 도입
-### 문제상황
-- 로그인한 유저와 로그인하지 않은 유저를 매번 컨트롤러에서 확인하니
-- 코드의 중복이 너무 많아지는 문제가 있었습니다.
-### 해결방안(인터셉터 도입)
-- HandlerInterceptor를 implements 하여 preHandle를통해 원하는 경로에 검증로직 일괄 적용했습니다.
 
-![image](https://github.com/user-attachments/assets/d09e46a9-35c7-4ff7-94f7-1670d9b35a49)
-### 성과
-- 컨트롤러는 더이상 권한을 일일이 확인하지 않아도 되게 되었으며
-- 공통 보안 정책을 한곳에서 관리할 수 있게 되었습니다.
-## 3.@ControllerAdvice 도입
-### 문제상황
-- 모든 컨트롤러의 각 메서드 마다 try-catch블록이 들어가면서 코드의 중복이 심해졌습니다.
-- 예측하지 못한 런타임 에러가 발생했을 경우 서버의 스택 트레이스가 그대로 노출되는 문제점이 있었습니다.
-### 해결방안(@ControllerAdvice 도입)
-- 어플리케이션 내의 모든 컨트롤러에서 발생하는 예외를 한곳으로 모드는 전역 예외처리기(GlobalExceptionHandler)를 구축했습니다.
-- @ExceptionHandler를 활용하여 발생한 예외의 종류에 따라 적절한 메서드가 실행되도록 매핑했습니다.
-
-![image](https://github.com/user-attachments/assets/5808ffcd-01c6-4b42-94a3-687dca6dc7e7)
-### 성과
-- 컨트롤러에서 try-catch를 제거하여 코드가 간결해졌으며 핵심 로직의 가독성이 크게 향상되었습니다.
-- 에러 발생 지점과 처리 지점을 분리함으로써 새로운 예외 유형이 추가되어도 공통 클래스 한 곳만 수정하면 되는 구조를 갖추었습니다.
-
-# 📝핵심기능 - 회원가입/로그인
-![image](https://github.com/user-attachments/assets/dd8b8d8b-5080-4f39-b8c8-ac79e980dfb2)
-# 📝핵심기능 - 게시글 작성
-![image](https://github.com/user-attachments/assets/5111cc90-122d-448b-8277-68ef0b0c2276)
-# 📝핵심기능 - 검색과 페이징
-![image](https://github.com/user-attachments/assets/3813a4fe-2e24-457c-b3a4-6fbbe5def0a7)
-- Criteria를 활용하여 페이징을 구현했습니다.
-
-![image](https://github.com/user-attachments/assets/ecc8f7ca-45f3-48aa-a7dc-1fe51b6738a7) 
-![image](https://github.com/user-attachments/assets/a4195065-e3e5-4431-9a84-ac1e76f3f1d7)
-# 📝핵심기능 - 댓글 작성
-![image](https://github.com/user-attachments/assets/04065f0b-185d-4297-b7c3-cded98d228b0)
-- REST API를 활용하여 댓글 기능을 설계했습니다.
-## 📋 Reply API 명세
-[ Base URL: /reply ]
-### 1. 댓글 등록
-- Method: POST
-- Endpoint: /new
-- Payload: ReplyVO (JSON)
-- Response: "success"
-### 2. 댓글 목록 조회
-- Method: GET
-- Endpoint: /list/{bno}
-- Path Variable: bno (게시글 번호)
-- Response: List<ReplyDetailDTO>
-### 3. 댓글 수정
-- Method: PUT
-- Endpoint: /edit/{rno}
-- Path Variable: rno (댓글 번호)
-- Response: "success"
-### 4. 댓글 삭제
-- Method: DELETE
-- Endpoint: /delete/{bno}/{rno}
-- Path Variable: bno, rno
-- Response: "success"
-  
-![image](https://github.com/user-attachments/assets/73535f5a-092c-430d-afd9-3e4089460608)
-![image](https://github.com/user-attachments/assets/6928e93b-27ab-4c4e-a8f8-0ceb3083b920)
-
-# 📝핵심기능 - 마이페이지(일반유저)
-![image](https://github.com/user-attachments/assets/6805ae83-7446-4ed1-9780-d165dbd46dd8)
-# 📝핵심기능 - 마이페이지(관리자)
-![image](https://github.com/user-attachments/assets/455c8bda-1c10-49e1-bbf4-83456355ec13)
-
-# 감사합니다.
+## 감사합니다.
 
 # 📞 Contact
 - 이메일 : million_food@naver.com
