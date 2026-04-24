@@ -13,11 +13,9 @@ import com.fmc.dto.MemberJoinDTO;
 import com.fmc.dto.MemberLoginDTO;
 import com.fmc.mapper.member.MemberMapper;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @lombok.RequiredArgsConstructor
-@Slf4j
 public class MemberServiceImpl implements MemberService{
 
 
@@ -75,7 +73,6 @@ public class MemberServiceImpl implements MemberService{
 			replyService.deleteReplyByMember(mno);
 			//board삭제
 			boardService.deletePostByMember(mno);
-			log.info("여기까지는 성공");
 		} catch (PersistenceException e) {
 			// TODO: handle exception
 			throw new PersistenceException("계정 삭제에 실패했습니다.ㅠㅠ",e);

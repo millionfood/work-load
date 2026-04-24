@@ -228,8 +228,7 @@
                   name="reply"
                   id="replyEditContent"
                   class="reply_edit_content_textarea"
-                  placeholder="\${textContent}"
-                ></textarea>
+                >\${textContent}</textarea>
                 <div class="reply_edit_content_button_box">
                   <button type="button" onclick="showList()">취소</button>
                   <button type="button" onclick="updateReply(\${rno})">

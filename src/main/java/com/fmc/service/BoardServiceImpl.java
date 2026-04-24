@@ -11,11 +11,14 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Safelist;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.HtmlUtils;
 
@@ -31,6 +34,7 @@ import com.fmc.mapper.board.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -41,8 +45,20 @@ public class BoardServiceImpl implements BoardService{
 	private final ReplyService replyService;
 	
 	
-	private String uploadSummerNotePath = "C:/dev/upload/summernote/";
-	private String uploadAttachPath = "C:/dev/upload/attach/";
+	private String uploadSummerNotePath = "";
+	private String uploadAttachPath = "";
+	
+	@PostConstruct
+	public void init() {
+		String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("win")) {
+            this.uploadSummerNotePath = "C:/dev/upload/summernote/";
+            this.uploadAttachPath = "C:/dev/upload/attach/";
+        } else {
+            this.uploadSummerNotePath = "/home/upload/summernote/";
+            this.uploadAttachPath = "/home/upload/attach/";
+        }
+	}
 	
 	@Override
 	@Transactional
@@ -51,7 +67,6 @@ public class BoardServiceImpl implements BoardService{
 		if(bcnt == 0) {
 			throw new PersistenceException("게시물 insert에 실패했습니다.");
 		}
-		
 		if(uploadFile != null && uploadFile.length > 0) {
 			String datePath = getFolder();
 			File uploadPath = new File(uploadAttachPath,datePath);
@@ -154,7 +169,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		for(String oldFile : oldFiles) {
 			if(!newFiles.contains(oldFile)) {
-				File file = new File(uploadSummerNotePath+oldFile);
+				File file = new File(uploadSummerNotePath,oldFile);
 				if(file.exists()) {
 					file.delete();
 				}
@@ -173,6 +188,7 @@ public class BoardServiceImpl implements BoardService{
 		//첨부 파일 업로드
 		if(uploadFiles != null && uploadFiles.length > 0) {
 			String datePath = getFolder();
+			
 			File uploadPath = new File(uploadAttachPath,datePath);
 			
 			if(!uploadPath.exists()) {
@@ -262,8 +278,7 @@ public class BoardServiceImpl implements BoardService{
 		boardMapper.deleteAttachByMno(mno);
 		
 		//게시물을 삭제한다.
-		int bcnt = boardMapper.deletePostByMno(mno);
-		if(bcnt == 0) throw new PersistenceException("멤버와 관련된 게시물 삭제에 실패했습니다. - db");
+		boardMapper.deletePostByMno(mno);
 		
 		//attach 로컬 파일 삭제 
 		if(avoList != null) {
@@ -296,7 +311,7 @@ public class BoardServiceImpl implements BoardService{
 			String fileName = imgUrl.substring(imgUrl.lastIndexOf("/")+1);
 			
 			//실제 파일 경로 객체 생성
-			File file = new File("C:/dev/upload/summernote/" + fileName);
+			File file = new File(uploadSummerNotePath, fileName);
 			
 			if(file.exists()) {
 				file.delete();
@@ -305,6 +320,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	//첨부파일 삭제 메서드
 	private void deleteLocalFiles(AttachVO avo) {
+		
 		if(avo!=null) {
 			String fullFileName = avo.getUuid()+"_"+avo.getFileName();
 			Path path = Paths.get(uploadAttachPath,avo.getUploadPath(),fullFileName);

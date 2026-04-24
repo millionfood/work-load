@@ -32,8 +32,8 @@ public class ReplyController {
 	@PostMapping(value = "/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo){
 		replyService.insert(vo);
-		 log.info("댓글 등록에 성공했습니다.");
-		 return new ResponseEntity<>("success", HttpStatus.OK);
+		log.info("댓글 등록에 성공했습니다.");
+		return new ResponseEntity<>("success", HttpStatus.OK);
 		
 	}
 	
