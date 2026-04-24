@@ -15,6 +15,8 @@ aop, interceptor, controlleradvice 등의 개념을 통해<br />
 더욱 확장성 있고 안정적인 게시판을 만들어 보았습니다.<br />
 
 <br />
+# 사이트 링크
+http://158.247.254.205:8080/<br />
 
 # 📝Projects
 2주간 진행했던 프로젝트 입니다.<br />
