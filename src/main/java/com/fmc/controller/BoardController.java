@@ -188,9 +188,13 @@ public class BoardController {
 	//파일 다운로드
 	@GetMapping(value = "/file/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> downloadFile(String uuid, String uploadPath, String fileName) {
+		
+		String fullPath = "/home/upload/attach/" + uploadPath + "/" + uuid + "_" + fileName;
 	  
-	    Resource resource = new FileSystemResource("C:/dev/upload/attach/" + uploadPath + "/" + uuid + "_" + fileName);
-	    
+	    Resource resource = new FileSystemResource(fullPath);
+	    if (!resource.exists()) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
 	    String resourceName = resource.getFilename();
 	    // UUID 제거한 원본 파일명으로 다운로드 되도록 설정
 	    String downloadName = resourceName.substring(resourceName.indexOf("_") + 1);

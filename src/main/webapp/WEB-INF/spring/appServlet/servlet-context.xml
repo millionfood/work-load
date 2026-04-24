@@ -13,7 +13,6 @@
     <aop:aspectj-autoproxy/> 
 <!-- 정적 자원 관리(img,css,js) -->
     <resources mapping="/resources/**" location="/resources/" />
-    <resources mapping="/upload/**" location="file:///C:/dev/upload/summernote/"></resources>
 <!-- 화면 경로 해결사 (컨트롤러가 home을 return하면 앞뒤로 경로와 확장자를 붙여줌) -->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/views/" />

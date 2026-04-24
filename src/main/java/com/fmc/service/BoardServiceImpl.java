@@ -114,7 +114,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		File target = new File(uploadSummerNotePath,saveName);
 		file.transferTo(target);
-		return "/upload/"+saveName;
+		return "/upload/summernote/"+saveName;
 	}
 	
 	
