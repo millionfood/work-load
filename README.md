@@ -10,47 +10,45 @@
 과거 국비지원 학원 6개월 수료 후 spring, jsp, jquery, mybatis, mariaDB를<br />
 활용하여 게시판을 만들고 아마존 ec2에 배포까지 완료했던 경험이 있습니다.<br />
 
-오랜시간이 흘렀지만 다시 기억을 떠올리면서<br />
-aop, interceptor, controlleradvice 등의 개념을 통해<br />
-더욱 확장성 있고 안정적인 게시판을 만들어 보았습니다.<br />
+이번에는 기존에 구축했던 시스템을 바탕으로, 최신 보안 트렌드와<br /> 
+aop, interceptor, controlleradvice 등의 개념을 적용하여 고도화했습니다.
 
 <br />
 # 사이트 링크
 http://158.247.254.205:8080/<br />
 
-# 📝Projects
-2주간 진행했던 프로젝트 입니다.<br />
-처음에는 기억을 되살리기위해 기존에 작성했던 코드를 분석하느라 시간이 많이 소모되었지만<br />
-점점 전체적인 구조가 익숙해져 속도를 붙이게 되었습니다.<br />
+# 📝work_log
+- 개발기간 : 2026.04.10~04.24
 
-## 1. 🛫 MyLittleTrip
-
-> work_log (단순한 게시판)
->
-> - 개발기간 : 2026.04.10~04.24
->
-> - Backend : Java11, Spring Framework 5.3.18, MyBatis 3.5.9, Spring Security
-> - Frontend : JavaScript(ES6), JQuery, AJAX, Bootstrap 3.4.1, Summernote
-> - Database : MariaDB
-> - DevOps/Tools : Apache Tomcat 9.0
-> 
-# 🛠 Spring Legacy MVC Framwork
+> ## 🛫 기술 스택
+- **Backend** : Java11, Spring Framework 5.3.18, MyBatis 3.5.9, Spring Security
+- **Frontend** : JavaScript(ES6), JQuery, AJAX, Bootstrap 3.4.1, Summernote
+- **Database** : MariaDB
+- **Web/WAS** : Apache Tomcat 9.0
+- **Infra** : Vultr VPS (Ubuntu 22.04 LTS)
+ 
+# 🛠 Spring Legacy Framework
 ## XML 기반의 의존성 및 환경 설정
 - Servlet-context.xml 및 Root-context.xml을 통한 명확한 빈 생명주기 관리와
 - WAS(Tomcat) 환경에서의 서블릿 구동 메커니즘을 이해하고 있습니다. 
 ## MyBatis (Data Mapper)
 - Spring Legacy와 MyBatis를 연동하여 SQL Mapper를 통한 쿼리 제어를 수행했습니다.
 - 특히 ResultMap과 동적 쿼리를 활용해 게시판의 복잡한 검색 조건을 최적화 했습니다.
+# Database Schema ERD
+![image](https://github.com/user-attachments/assets/2c970c34-38f3-4c9c-808e-2e993f7272db)
+- 게시글과 첨부파일을 1:N 관계로 설계하여 무결성을 확보했습니다.
+- 회원등급(일반/관리자)에 따른 권한 분리를 고려한 테이블 구조를 채택했습니다.
 # 🛠 보안 및 파일 처리 시스템
 ## BCrypt 기반 비밀번호 암호화
 - Spring Security의 BCryptPasswordEncoder를 도입하여 단방향 해시 암호화를 구현했습니다.
 - 사용자의 비밀번호를 Salting 처리하여 DB 침해시에도 개인정보를 안전하게 보호하도록 설계했습니다.
-
 ![image](https://github.com/user-attachments/assets/ef4f6e85-1ef4-42dd-bc0b-ae45c93646ab)
 ## 첨부파일 관리 및 대용량 처리
 - MultipartResolver를 활용한 파일 업로드 시스템을 구축했습니다.
 - 서버 내 물리경로 보안을 위해서 UUID 기반의 파일명 치환 정책을 적용했으며,
 - 원본 파일명과 저장 파일명을 DB에서 매핑 관리하여 데이터 무결성을 확보했습니다.
+- System.getProperty("os.name")를 활용하여 Window와 Linux(CentOS/Ubuntu) 환경에 
+관계 없이 파일 업로드 경로가 동적으로 설정되도록 구현했습니다.
 
 ![image](https://github.com/user-attachments/assets/55f22859-dc08-4c57-8501-3d386375bf7a)
 ## Summernote 에디터 & 이미지 바이너리 처리
@@ -61,6 +59,7 @@ http://158.247.254.205:8080/<br />
  
 ![image](https://github.com/user-attachments/assets/e3204ce8-bf8f-4f0f-9ede-64e5ac58a40e)
 # 🛠 Spring 프레임워크 기술을 활용한 클린코드와 공통 관심사의 분리
+
 ## 1.AOP 도입
 ### 문제상황
 - 각 서비스 메서드의 성능을 파악해야 했으나,
@@ -72,6 +71,7 @@ http://158.247.254.205:8080/<br />
 ### 성과
 - 비즈니스 로직과 부가 기능을 분리하여 코드 유지보수성이 향상되었습니다.
 - 전체 서비스의 병목 지점을 데이터로 파악하기 용이해졌습니다.
+  
 ## 2.인터셉터 도입
 ### 문제상황
 - 로그인한 유저와 로그인하지 않은 유저를 매번 컨트롤러에서 확인하니
@@ -83,6 +83,7 @@ http://158.247.254.205:8080/<br />
 ### 성과
 - 컨트롤러는 더이상 권한을 일일이 확인하지 않을 수 있게 되었으며
 - 공통 보안 정책을 한곳에서 관리할 수 있게 되었습니다.
+  
 ## 3.@ControllerAdvice 도입
 ### 문제상황
 - 모든 컨트롤러의 각 메서드 마다 try-catch블록이 들어가면서 코드의 중복이 심해졌습니다.
@@ -115,7 +116,7 @@ http://158.247.254.205:8080/<br />
 - Method: POST
 - Endpoint: /new
 - Payload: ReplyVO (JSON)
-- Response: "success"
+- Response: Http Status 200 (OK)
 ### 2. 댓글 목록 조회
 - Method: GET
 - Endpoint: /list/{bno}
@@ -125,12 +126,12 @@ http://158.247.254.205:8080/<br />
 - Method: PUT
 - Endpoint: /edit/{rno}
 - Path Variable: rno (댓글 번호)
-- Response: "success"
+- Response: Http Status 200 (OK)
 ### 4. 댓글 삭제
 - Method: DELETE
 - Endpoint: /delete/{bno}/{rno}
 - Path Variable: bno, rno
-- Response: "success"
+- Response: Http Status 200 (OK)
   
 ![image](https://github.com/user-attachments/assets/73535f5a-092c-430d-afd9-3e4089460608)
 ![image](https://github.com/user-attachments/assets/6928e93b-27ab-4c4e-a8f8-0ceb3083b920)
@@ -140,6 +141,11 @@ http://158.247.254.205:8080/<br />
 # 📝핵심기능 - 마이페이지(관리자)
 ![image](https://github.com/user-attachments/assets/455c8bda-1c10-49e1-bbf4-83456355ec13)
 
+# 🌐배포 및 환경 최적화
+- VPS 환경 구축: 클라우드 서버(Ubuntu)환경에 직접 Java와 Tomcat을 설치하고 WAR파일을 배포한 경험이 있습니다.
+- 환경 격리: 개발(Windows)과 운영(Linux)환경의 차이를 이해하고, OS별 경로 동적 설계 로직을 반영하여
+배포시 환경 설정 오류를 최소화 했습니다.
+- 외부 접속 제어: MariaDB의 원격 접속 권한 설정 및 방화벽(Port8080) 설정을 통해 실제 서비스가 가능한 네트워크 환경을 구축했습니다.
 
 ## 감사합니다.
 
