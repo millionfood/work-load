@@ -16,6 +16,8 @@ aop, interceptor, controlleradvice 등의 개념을 적용하여 고도화했습
 <br />
 # 사이트 링크
 http://158.247.254.205:8080/<br />
+> 관리자 아이디 : admin@gmail.com
+> 관리자 비번 : 1111
 
 # 📝work_log
 - 개발기간 : 2026.04.10~04.24
